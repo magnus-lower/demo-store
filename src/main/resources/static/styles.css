@@ -28,3 +28,17 @@ body {
 .product p {
     color: #555;
 }
+
+#cart-container {
+    margin-top: 20px;
+}
+
+#cart-items {
+    list-style-type: none;
+    padding: 0;
+}
+
+#cart-items li {
+    padding: 5px 0;
+}
+
