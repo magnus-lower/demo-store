@@ -4,12 +4,39 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateCartUI() {
         const cartItems = document.getElementById("cart-items");
         cartItems.innerHTML = '';
-        cart.forEach(item => {
+        cart.forEach((item, index) => {
             const cartItem = document.createElement("li");
-            cartItem.textContent = `${item.name} - $${item.price} x ${item.quantity}`;
+            cartItem.innerHTML = `
+                ${item.name} - $${item.price} 
+                <button onclick="decreaseQuantity(${index})">-</button>
+                ${item.quantity}
+                <button onclick="increaseQuantity(${index})">+</button>
+            `;
             cartItems.appendChild(cartItem);
         });
     }
+
+    window.increaseQuantity = (index) => {
+        cart[index].quantity++;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartUI();
+    };
+
+    window.decreaseQuantity = (index) => {
+        if (cart[index].quantity > 1) {
+            cart[index].quantity--;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartUI();
+        } else {
+            removeFromCart(index); // Remove item if quantity goes below 1
+        }
+    };
+
+    window.removeFromCart = (index) => {
+        cart.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartUI();
+    };
 
     updateCartUI();
 

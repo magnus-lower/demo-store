@@ -28,7 +28,6 @@ body {
 .product p {
     color: #555;
 }
-
 #cart-container {
     margin-top: 20px;
 }
@@ -39,6 +38,31 @@ body {
 }
 
 #cart-items li {
-    padding: 5px 0;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
 }
 
+button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+button:hover {
+    background-color: #d32f2f;
+}
+
+button:nth-child(2),
+button:nth-child(4) {
+    background-color: #2196F3;
+}
+
+button:nth-child(2):hover,
+button:nth-child(4):hover {
+    background-color: #1976D2;
+}
