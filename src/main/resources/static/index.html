@@ -1,14 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo Store</title>
+    <title>Demobutikk</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<nav class="main-nav">
+    <div class="dropdown">
+        <button class="dropbtn">Produkter</button>
+        <div class="dropdown-content">
+            <a href="#" onclick="filterProducts('Alle')">Alle Produkter</a>
+            <a href="#" onclick="filterProducts('Mat og drikke')">Mat og drikke</a>
+            <a href="#" onclick="filterProducts('Klær')">Klær</a>
+            <a href="#" onclick="filterProducts('Møbler')">Møbler</a>
+        </div>
+    </div>
+</nav>
+
 <div id="product-list"></div>
-<button id="view-cart">View Cart</button>
+<button id="view-cart">Handlekurv</button>
 
 <script src="script.js"></script>
 </body>
