@@ -13,9 +13,9 @@ public class ProductController {
     @GetMapping("/api/products")
     public List<Product> getProducts() {
         List<Product> products = new ArrayList<>();
-        products.add(new Product(1L, "Product 1", "Description 1", 10.99, "/images/product1.jpg"));
-        products.add(new Product(2L, "Product 2", "Description 2", 12.99, "/images/product2.jpg"));
-        products.add(new Product(3L, "Product 3", "Description 3", 15.99, "/images/product3.jpg"));
+        products.add(new Product(1L, "Bottle", "A bottle which is large", 10.99, "/images/Bottle.jpg"));
+        products.add(new Product(2L, "Sunglasses", "Very cool sunglasses", 12.99, "/images/Sunglasses.jpg"));
+        products.add(new Product(3L, "Plant pot", "A plant pot which fits almost every type of plant", 15.99, "/images/Plant pot.jpg"));
         return products;
     }
 }

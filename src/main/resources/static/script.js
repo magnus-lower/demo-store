@@ -10,21 +10,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 productElement.className = "product";
                 productElement.innerHTML = `
                     <h3>${product.name}</h3>
+                    <img src="${product.imageUrl}" alt="${product.name}" style="width:100%; height:auto;">
                     <p>${product.description}</p>
                     <p><strong>$${product.price}</strong></p>
-                    <button onclick="addToCart(${product.id}, '${product.name}', ${product.price})">Add to cart</button>
+                    <button onclick="addToCart(${product.id}, '${product.name}', ${product.price}, '${product.imageUrl}')">Add to cart</button>
                 `;
                 productList.appendChild(productElement);
             });
         })
         .catch(error => console.error("Error fetching products:", error));
 
-    window.addToCart = (id, name, price) => {
+    window.addToCart = (id, name, price, imageUrl) => {
         const item = cart.find(product => product.id === id);
         if (item) {
             item.quantity++;
         } else {
-            cart.push({ id, name, price, quantity: 1 });
+            cart.push({ id, name, price, imageUrl, quantity: 1 });
         }
         localStorage.setItem('cart', JSON.stringify(cart));
     };

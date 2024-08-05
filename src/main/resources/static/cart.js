@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cart.forEach((item, index) => {
             const cartItem = document.createElement("li");
             cartItem.innerHTML = `
+                <img src="${item.imageUrl}" alt="${item.name}" style="width:50px; height:auto;">
                 ${item.name} - $${item.price} 
                 <button onclick="decreaseQuantity(${index})">-</button>
                 ${item.quantity}
