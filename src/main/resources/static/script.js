@@ -27,13 +27,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    window.filterProducts = (category) => {
-        if (category === 'Alle') {
-            displayProducts(allProducts);
-        } else {
-            const filteredProducts = allProducts.filter(product => product.category === category);
-            displayProducts(filteredProducts);
+    window.filterProducts = (category = null) => {
+        let filteredProducts = allProducts;
+
+        const searchTerm = document.getElementById("search-box").value.toLowerCase();
+
+        if (searchTerm) {
+            filteredProducts = filteredProducts.filter(product =>
+                product.name.toLowerCase().includes(searchTerm) ||
+                product.description.toLowerCase().includes(searchTerm)
+            );
         }
+
+        if (category && category !== 'Alle') {
+            filteredProducts = filteredProducts.filter(product => product.category === category);
+        }
+
+        displayProducts(filteredProducts);
     };
 
     window.addToCart = (id, name, price, imageUrl) => {
@@ -48,5 +58,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("view-cart").addEventListener("click", () => {
         window.location.href = "cart.html";
+    });
+
+    // Add search box event listener
+    document.getElementById("search-box").addEventListener("input", () => {
+        filterProducts();
     });
 });
