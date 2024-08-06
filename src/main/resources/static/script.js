@@ -1,3 +1,12 @@
+function toggleCategories() {
+    const categoryList = document.getElementById('category-list');
+    if (categoryList.style.display === 'none' || categoryList.style.display === '') {
+        categoryList.style.display = 'flex';
+    } else {
+        categoryList.style.display = 'none';
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let allProducts = [];
@@ -12,49 +21,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function displayProducts(products) {
         const productList = document.getElementById("product-list");
-        const existingProducts = productList.children;
+        productList.innerHTML = ''; // Fjern tidligere produkter
 
-        // Remove only the elements that need to be removed, instead of resetting the entire innerHTML
-        Array.from(existingProducts).forEach(productElement => {
-            const productId = productElement.dataset.id;
-            const productExists = products.some(product => product.id == productId);
-
-            if (!productExists) {
-                productElement.remove();
-            }
-        });
-
-        // Add only the new products
         products.forEach(product => {
-            if (!document.querySelector(`[data-id='${product.id}']`)) {
-                const productElement = document.createElement("div");
-                productElement.className = "product";
-                productElement.dataset.id = product.id;
-                productElement.innerHTML = `
-                    <h3>${product.name}</h3>
-                    <img src="${product.imageUrl}" alt="${product.name}" style="width:100%; height:auto;">
-                    <p>${product.description}</p>
-                    <p><strong>kr ${product.price}</strong></p>
-                    <button onclick="addToCart(${product.id}, '${product.name}', ${product.price}, '${product.imageUrl}')">Legg i handlekurv</button>
-                `;
-                productList.appendChild(productElement);
-            }
+            const productElement = document.createElement("div");
+            productElement.className = "product";
+            productElement.dataset.id = product.id;
+            productElement.innerHTML = `
+                <h3>${product.name}</h3>
+                <img src="${product.imageUrl}" alt="${product.name}" style="width:100%; height:auto;">
+                <p>${product.description}</p>
+                <p><strong>kr ${product.price}</strong></p>
+                <button onclick="addToCart(${product.id}, '${product.name}', ${product.price}, '${product.imageUrl}')">Legg i handlekurv</button>
+            `;
+            productList.appendChild(productElement);
         });
     }
 
-    function debounce(func, wait) {
-        let timeout;
-        return function(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func.apply(this, args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-
-    window.filterProducts = debounce((category = null) => {
+    window.filterProducts = (category = 'Alle') => {
         let filteredProducts = allProducts;
 
         const searchTerm = document.getElementById("search-box").value.toLowerCase();
@@ -66,12 +50,12 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-        if (category && category !== 'Alle') {
+        if (category !== 'Alle') {
             filteredProducts = filteredProducts.filter(product => product.category === category);
         }
 
         displayProducts(filteredProducts);
-    }, 300);
+    };
 
     window.addToCart = (id, name, price, imageUrl) => {
         const item = cart.find(product => product.id === id);

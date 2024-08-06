@@ -1,9 +1,11 @@
+/* Set the basic font style, padding, and background color for the body */
 body {
     font-family: Arial, sans-serif;
     padding: 20px;
     background-color: #f5f5f5;
 }
 
+/* Container for the search bar and store name, with styling for layout and appearance */
 .search-container {
     display: flex;
     align-items: center;
@@ -16,6 +18,7 @@ body {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Style for the store name text, including font, color, and spacing */
 .store-name {
     font-size: 20px;
     font-weight: bold;
@@ -28,6 +31,7 @@ body {
     border-right: 1px solid #ccc;
 }
 
+/* Styling for the search input field, including padding for the search icon */
 .search-input {
     border: none;
     border-radius: 20px;
@@ -39,10 +43,12 @@ body {
     position: relative;
 }
 
+/* Placeholder text color for the search input field */
 .search-input::placeholder {
     color: #aaa;
 }
 
+/* Adding a search icon inside the search input field using a pseudo-element */
 .search-container::before {
     content: "\1F50D";
     font-size: 16px;
@@ -52,18 +58,12 @@ body {
     pointer-events: none;
 }
 
-.search-input::placeholder {
-    color: #aaa;
-}
-
+/* Style for the main navigation button below the search bar */
 .main-nav {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
+    display: flex;
+    justify-content: flex-start;
+    max-width: 630px;
+    margin: 0 auto;
 }
 
 .dropbtn {
@@ -73,12 +73,26 @@ body {
     font-size: 16px;
     border: none;
     cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
 }
 
+/* Button styling for dropdown trigger, with hover effects */
+.dropbtn {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Hover effect for the dropdown button */
 .dropbtn:hover {
     background-color: #d32f2f;
 }
 
+/* Dropdown content styling, initially hidden and displayed on hover */
 .dropdown-content {
     display: none;
     position: absolute;
@@ -88,6 +102,7 @@ body {
     z-index: 1;
 }
 
+/* Styling for individual links within the dropdown content */
 .dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -95,81 +110,142 @@ body {
     display: block;
 }
 
+/* Hover effect for dropdown content links */
 .dropdown-content a:hover {
     background-color: #ddd;
 }
 
+/* Show dropdown content when hovering over the dropdown container */
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
+/* Styling for the product list container, with flexible layout and added spacing */
 #product-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 30px; /* Adds space between product cards */
     justify-content: center;
+    margin-top: 20px;
 }
 
+/* Styling for individual product items with added padding */
 .product {
     border: 1px solid #ddd;
-    padding: 10px;
-    width: 200px;
+    padding: 20px; /* Adds space inside each product card */
+    width: 220px; /* Adjust width to accommodate new padding */
     text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px; /* Optional: adds rounded corners */
+    background-color: #fff; /* Optional: ensures a clean background */
 }
 
+/* Ensure product images are responsive within their container with added margin */
 .product img {
     width: 100%;
     height: auto;
+    margin-bottom: 15px; /* Adds space between the image and product details */
 }
 
+/* Margin and color styling for product titles */
 .product h3 {
-    margin: 10px 0;
+    margin: 15px 0; /* Adds space between the title and other elements */
 }
 
+/* Color styling for product descriptions */
 .product p {
     color: #555;
+    margin-bottom: 15px; /* Adds space between description and price */
 }
 
+/* General button styling, with hover effects */
 button {
-    padding: 5px 10px;
-    margin: 0 5px;
+    padding: 10px 20px; /* Adjusted padding for buttons */
+    margin: 10px 5px; /* Adds space between buttons */
     background-color: #f44336;
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 5px; /* Optional: rounded corners for buttons */
 }
 
 button:hover {
     background-color: #d32f2f;
 }
 
+/* Position the "view-cart" button at the top-right of the page */
 #view-cart {
     background-color: #2196F3;
-    margin-top: 20px;
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
+/* "Hoover-effect" for the "View-cart" button */
 #view-cart:hover {
     background-color: #1976D2;
 }
 
+/* Styling for the cart items list, removing default list styling */
 #cart-items {
     list-style-type: none;
     padding: 0;
 }
 
+/* Flexbox styling for individual cart items */
 #cart-items li {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
 
+/* Ensure cart item images are spaced properly from text */
 #cart-items li img {
     margin-right: 10px;
 }
 
+/* Spacing for buttons and spans within cart items */
 #cart-items li button,
 #cart-items li span {
     margin-left: 5px;
     margin-right: 5px;
+}
+
+/* Styles for category list and category items */
+.category-list {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+.category {
+    text-align: center;
+    width: 150px;
+    cursor: pointer; /* Make it clear the item is clickable */
+}
+
+.category img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.category p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+.category:hover img {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }

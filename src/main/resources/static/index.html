@@ -15,15 +15,29 @@
 
 <nav class="main-nav">
     <div class="dropdown">
-        <button class="dropbtn">Produkter</button>
-        <div class="dropdown-content">
-            <a href="#" onclick="filterProducts('Alle')">Alle Produkter</a>
-            <a href="#" onclick="filterProducts('Mat og drikke')">Mat og drikke</a>
-            <a href="#" onclick="filterProducts('Klær')">Klær</a>
-            <a href="#" onclick="filterProducts('Møbler')">Møbler</a>
-        </div>
+        <button class="dropbtn" onclick="toggleCategories()">Produkter</button>
     </div>
 </nav>
+
+<div id="category-list" class="category-list" style="display: none;">
+    <div class="category" onclick="filterProducts('Alle')">
+        <img src="images/all-products.jpg" alt="Alle produkter">
+        <p>Alle produkter</p>
+    </div>
+    <div class="category" onclick="filterProducts('Mat og drikke')">
+        <img src="images/Bottle.jpg" alt="Mat og drikke">
+        <p>Mat og drikke</p>
+    </div>
+    <div class="category" onclick="filterProducts('Klær')">
+        <img src="images/Sunglasses.jpg" alt="Klær">
+        <p>Klær</p>
+    </div>
+    <div class="category" onclick="filterProducts('Møbler')">
+        <img src="images/Plant pot.jpg" alt="Møbler">
+        <p>Møbler</p>
+    </div>
+    <!-- Add more categories here -->
+</div>
 
 <div id="product-list"></div>
 <button id="view-cart">Handlekurv</button>
