@@ -12,22 +12,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function displayProducts(products) {
         const productList = document.getElementById("product-list");
-        productList.innerHTML = '';
+        const existingProducts = productList.children;
+
+        // Remove only the elements that need to be removed, instead of resetting the entire innerHTML
+        Array.from(existingProducts).forEach(productElement => {
+            const productId = productElement.dataset.id;
+            const productExists = products.some(product => product.id == productId);
+
+            if (!productExists) {
+                productElement.remove();
+            }
+        });
+
+        // Add only the new products
         products.forEach(product => {
-            const productElement = document.createElement("div");
-            productElement.className = "product";
-            productElement.innerHTML = `
-                <h3>${product.name}</h3>
-                <img src="${product.imageUrl}" alt="${product.name}" style="width:100%; height:auto;">
-                <p>${product.description}</p>
-                <p><strong>kr ${product.price}</strong></p>
-                <button onclick="addToCart(${product.id}, '${product.name}', ${product.price}, '${product.imageUrl}')">Legg i handlekurv</button>
-            `;
-            productList.appendChild(productElement);
+            if (!document.querySelector(`[data-id='${product.id}']`)) {
+                const productElement = document.createElement("div");
+                productElement.className = "product";
+                productElement.dataset.id = product.id;
+                productElement.innerHTML = `
+                    <h3>${product.name}</h3>
+                    <img src="${product.imageUrl}" alt="${product.name}" style="width:100%; height:auto;">
+                    <p>${product.description}</p>
+                    <p><strong>kr ${product.price}</strong></p>
+                    <button onclick="addToCart(${product.id}, '${product.name}', ${product.price}, '${product.imageUrl}')">Legg i handlekurv</button>
+                `;
+                productList.appendChild(productElement);
+            }
         });
     }
 
-    window.filterProducts = (category = null) => {
+    function debounce(func, wait) {
+        let timeout;
+        return function(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func.apply(this, args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    window.filterProducts = debounce((category = null) => {
         let filteredProducts = allProducts;
 
         const searchTerm = document.getElementById("search-box").value.toLowerCase();
@@ -44,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         displayProducts(filteredProducts);
-    };
+    }, 300);
 
     window.addToCart = (id, name, price, imageUrl) => {
         const item = cart.find(product => product.id === id);
@@ -60,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "cart.html";
     });
 
-    // Add search box event listener
     document.getElementById("search-box").addEventListener("input", () => {
         filterProducts();
     });
