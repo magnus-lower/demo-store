@@ -177,8 +177,8 @@ button:hover {
 #view-cart {
     background-color: #2196F3;
     position: absolute;
-    top: 50px;
-    right: 20px;
+    top: 120px;
+    right: 400px;
     padding: 10px 20px;
     color: white;
     font-size: 16px;
@@ -187,7 +187,7 @@ button:hover {
     border-radius: 5px;
 }
 
-/* "Hoover-effect" for the "View-cart" button */
+/* "Hover-effect" for the "View-cart" button */
 #view-cart:hover {
     background-color: #1976D2;
 }
@@ -248,4 +248,51 @@ button:hover {
 .category:hover img {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Oppdatert styling for cart notification */
+.cart-notification {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #323232;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    font-size: 16px;
+    opacity: 0;
+    transition: opacity 0.5s ease, top 0.5s ease;
+    max-width: 300px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cart-notification.show {
+    display: flex;
+    opacity: 1;
+    top: 40px;
+}
+
+.notification-icon {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.notification-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: auto;
+    font-size: 14px;
+}
+
+.notification-button:hover {
+    background-color: #45a049;
 }

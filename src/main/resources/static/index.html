@@ -13,6 +13,12 @@
     <input type="text" class="search-input" id="search-box" placeholder="Hva ser du etter?" onkeyup="filterProducts()">
 </div>
 
+<div id="cart-notification" class="cart-notification">
+    <span class="notification-icon">✔️</span>
+    Varen er lagt til i handlekurven!
+    <button class="notification-button" onclick="window.location.href='cart.html'">Vis handlekurv</button>
+</div>
+
 <nav class="main-nav">
     <div class="dropdown">
         <button class="dropbtn" onclick="toggleCategories()">Produkter</button>

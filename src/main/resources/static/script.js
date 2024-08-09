@@ -65,6 +65,13 @@ document.addEventListener("DOMContentLoaded", () => {
             cart.push({ id, name, price, imageUrl, quantity: 1 });
         }
         localStorage.setItem('cart', JSON.stringify(cart));
+
+        const notification = document.getElementById("cart-notification");
+        notification.classList.add("show");
+
+        setTimeout(() => {
+            notification.classList.remove("show");
+        }, 3000);
     };
 
     document.getElementById("view-cart").addEventListener("click", () => {
