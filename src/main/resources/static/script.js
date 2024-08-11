@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(products => {
             allProducts = products;
             displayProducts(products);
+            updateCartCount();
         })
         .catch(error => console.error("Feil ved henting av produkter:", error));
 
@@ -57,6 +58,19 @@ document.addEventListener("DOMContentLoaded", () => {
         displayProducts(filteredProducts);
     };
 
+    // Function to update the cart count in the UI
+    function updateCartCount() {
+        const cartCount = document.getElementById("cart-count");
+        const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+
+        // Only display the count if there are items in the cart
+        if (totalItems > 0) {
+            cartCount.textContent = `(${totalItems})`;
+        } else {
+            cartCount.textContent = ''; // Clear the count if the cart is empty
+        }
+    }
+
     window.addToCart = (id, name, price, imageUrl) => {
         const item = cart.find(product => product.id === id);
         if (item) {
@@ -65,6 +79,8 @@ document.addEventListener("DOMContentLoaded", () => {
             cart.push({ id, name, price, imageUrl, quantity: 1 });
         }
         localStorage.setItem('cart', JSON.stringify(cart));
+
+        updateCartCount();
 
         const notification = document.getElementById("cart-notification");
         notification.classList.add("show");
