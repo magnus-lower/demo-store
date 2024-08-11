@@ -7,18 +7,25 @@ document.addEventListener("DOMContentLoaded", () => {
         const cartItems = document.getElementById("cart-items");
         const emptyCartMessage = document.getElementById("empty-cart-message");
         const backToStoreButton = document.getElementById("back-to-store");
+        const clearCartButton = document.getElementById("clear-cart");
+        const cartTotalElement = document.getElementById("cart-total");
+
         cartItems.innerHTML = ''; // Clear the cart items list
 
         if (cart.length === 0) {
-            // Display the empty cart message and hide the cart items list and "continue shopping" button
+            // Display the empty cart message and hide the cart items list, "Totalt:" and "continue shopping" button
             emptyCartMessage.style.display = 'block';
             cartItems.style.display = 'none';
             backToStoreButton.style.display = 'none';
+            clearCartButton.style.display = 'none';
+            cartTotalElement.style.display = 'none'; // Hide the total price
         } else {
-            // Hide the empty cart message and show the cart items list and "continue shopping" button
+            // Hide the empty cart message and show the cart items list, "Totalt:" and "continue shopping" button
             emptyCartMessage.style.display = 'none';
             cartItems.style.display = 'block';
             backToStoreButton.style.display = 'block';
+            clearCartButton.style.display = 'block';
+            cartTotalElement.style.display = 'block'; // Show the total price
 
             // Loop through each item in the cart and create its corresponding UI element
             cart.forEach((item, index) => {
@@ -33,7 +40,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
                 cartItems.appendChild(cartItem);
             });
+
+            // Update the total price of the cart
+            updateCartTotal();
         }
+    }
+
+    // Function to update the total price of the cart
+    function updateCartTotal() {
+        const cartTotalElement = document.getElementById("cart-total");
+        const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        cartTotalElement.textContent = `Totalt: kr ${total.toFixed(2)}`;
     }
 
     // Event listener for handling clicks on increase and decrease buttons
@@ -73,34 +90,10 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "index.html"; // Navigate back to the main store page
     });
 
+    // Event listener for the "clear cart" button
     document.getElementById("clear-cart").addEventListener("click", () => {
         cart = [];
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartUI();
     });
-
-    function updateCartUI() {
-        const clearCartButton = document.getElementById("clear-cart");
-        const cartItems = document.getElementById("cart-items");
-        cartItems.innerHTML = '';
-
-        if (cart.length === 0) {
-            cartItems.innerHTML = '<li>Handlekurven er tom</li>';
-            clearCartButton.style.display = 'none';
-        } else {
-            cart.forEach((item, index) => {
-                const cartItem = document.createElement("li");
-                cartItem.dataset.id = item.id;
-                cartItem.innerHTML = `
-                <img src="${item.imageUrl}" alt="${item.name}" style="width:50px; height:auto;">
-                ${item.name} - kr ${item.price} 
-                <button class="decrease" data-index="${index}">-</button>
-                <span class="quantity">${item.quantity}</span>
-                <button class="increase" data-index="${index}">+</button>
-            `;
-                cartItems.appendChild(cartItem);
-            });
-            clearCartButton.style.display = 'block'; // Show clear cart button
-        }
-    }
 });
