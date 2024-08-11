@@ -5,12 +5,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // Function to update the cart UI based on the current state of the cart
     function updateCartUI() {
         const cartItems = document.getElementById("cart-items");
+        const emptyCartMessage = document.getElementById("empty-cart-message");
+        const backToStoreButton = document.getElementById("back-to-store");
         cartItems.innerHTML = ''; // Clear the cart items list
 
         if (cart.length === 0) {
-            // Display a message if the cart is empty
-            cartItems.innerHTML = '<li>Handlekurven er tom</li>';
+            // Display the empty cart message and hide the cart items list and "continue shopping" button
+            emptyCartMessage.style.display = 'block';
+            cartItems.style.display = 'none';
+            backToStoreButton.style.display = 'none';
         } else {
+            // Hide the empty cart message and show the cart items list and "continue shopping" button
+            emptyCartMessage.style.display = 'none';
+            cartItems.style.display = 'block';
+            backToStoreButton.style.display = 'block';
+
             // Loop through each item in the cart and create its corresponding UI element
             cart.forEach((item, index) => {
                 const cartItem = document.createElement("li");
@@ -56,6 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Event listener for the "back to store" button
     document.getElementById("back-to-store").addEventListener("click", () => {
+        window.location.href = "index.html"; // Navigate back to the main store page
+    });
+
+    // Event listener for the "back to store" button when cart is empty
+    document.getElementById("back-to-store-empty").addEventListener("click", () => {
         window.location.href = "index.html"; // Navigate back to the main store page
     });
 });

@@ -8,7 +8,17 @@
 </head>
 <body>
 <h2>Din handlekurv</h2>
+
+<!-- Container for cart items -->
 <ul id="cart-items"></ul>
+
+<!-- When the cart is empty -->
+<div id="empty-cart-message" style="display: none;">
+    <p>Handlekurven din er tom.</p>
+    <button id="back-to-store-empty">Gå til butikken</button>
+</div>
+
+<!-- Button to navigate back to the store when there are items in the cart -->
 <button id="back-to-store">Fortsett å handle</button>
 
 <script src="cart.js"></script>
