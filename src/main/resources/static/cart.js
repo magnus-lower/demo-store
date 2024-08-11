@@ -1,73 +1,61 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Load the cart from localStorage or initialize it as an empty array
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+    // Function to update the cart UI based on the current state of the cart
     function updateCartUI() {
         const cartItems = document.getElementById("cart-items");
+        cartItems.innerHTML = ''; // Clear the cart items list
 
-        // Store the previous state of the cart
-        const previousCartItems = Array.from(cartItems.children).map(child => ({
-            id: parseInt(child.dataset.id),
-            quantity: parseInt(child.querySelector(".quantity").textContent)
-        }));
-
-        // Check for changes and only update necessary elements
-        cart.forEach((item, index) => {
-            const existingItem = previousCartItems.find(cartItem => cartItem.id === item.id);
-            if (existingItem) {
-                if (existingItem.quantity !== item.quantity) {
-                    // Update quantity
-                    const quantityElement = cartItems.querySelector(`[data-id="${item.id}"] .quantity`);
-                    quantityElement.textContent = item.quantity;
-                }
-            } else {
-                // Add new item
+        if (cart.length === 0) {
+            // Display a message if the cart is empty
+            cartItems.innerHTML = '<li>Handlekurven er tom</li>';
+        } else {
+            // Loop through each item in the cart and create its corresponding UI element
+            cart.forEach((item, index) => {
                 const cartItem = document.createElement("li");
                 cartItem.dataset.id = item.id;
                 cartItem.innerHTML = `
                     <img src="${item.imageUrl}" alt="${item.name}" style="width:50px; height:auto;">
-                    ${item.name} - $${item.price} 
+                    ${item.name} - kr ${item.price} 
                     <button class="decrease" data-index="${index}">-</button>
                     <span class="quantity">${item.quantity}</span>
                     <button class="increase" data-index="${index}">+</button>
                 `;
                 cartItems.appendChild(cartItem);
-            }
-        });
-
-        // Remove items that are no longer in the cart
-        previousCartItems.forEach(prevItem => {
-            if (!cart.find(item => item.id === prevItem.id)) {
-                const itemToRemove = cartItems.querySelector(`[data-id="${prevItem.id}"]`);
-                itemToRemove.remove();
-            }
-        });
+            });
+        }
     }
 
+    // Event listener for handling clicks on increase and decrease buttons
     document.getElementById("cart-items").addEventListener("click", (event) => {
         const target = event.target;
         const index = target.dataset.index;
 
+        // Increase quantity button functionality
         if (target.classList.contains("increase")) {
             cart[index].quantity++;
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartUI();
+            localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage
+            updateCartUI(); // Update the UI
         }
 
+        // Decrease quantity button functionality
         if (target.classList.contains("decrease")) {
             if (cart[index].quantity > 1) {
                 cart[index].quantity--;
             } else {
-                cart.splice(index, 1);
+                cart.splice(index, 1); // Remove item from cart if quantity is 1 and decrease is clicked
             }
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartUI();
+            localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage
+            updateCartUI(); // Update the UI
         }
     });
 
-    // Initial cart display
+    // Initial cart display when the page loads
     updateCartUI();
 
+    // Event listener for the "back to store" button
     document.getElementById("back-to-store").addEventListener("click", () => {
-        window.location.href = "index.html";
+        window.location.href = "index.html"; // Navigate back to the main store page
     });
 });
