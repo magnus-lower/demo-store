@@ -72,4 +72,35 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("back-to-store-empty").addEventListener("click", () => {
         window.location.href = "index.html"; // Navigate back to the main store page
     });
+
+    document.getElementById("clear-cart").addEventListener("click", () => {
+        cart = [];
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartUI();
+    });
+
+    function updateCartUI() {
+        const clearCartButton = document.getElementById("clear-cart");
+        const cartItems = document.getElementById("cart-items");
+        cartItems.innerHTML = '';
+
+        if (cart.length === 0) {
+            cartItems.innerHTML = '<li>Handlekurven er tom</li>';
+            clearCartButton.style.display = 'none';
+        } else {
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement("li");
+                cartItem.dataset.id = item.id;
+                cartItem.innerHTML = `
+                <img src="${item.imageUrl}" alt="${item.name}" style="width:50px; height:auto;">
+                ${item.name} - kr ${item.price} 
+                <button class="decrease" data-index="${index}">-</button>
+                <span class="quantity">${item.quantity}</span>
+                <button class="increase" data-index="${index}">+</button>
+            `;
+                cartItems.appendChild(cartItem);
+            });
+            clearCartButton.style.display = 'block'; // Show clear cart button
+        }
+    }
 });
