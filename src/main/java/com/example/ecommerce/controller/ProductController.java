@@ -1,21 +1,27 @@
 package com.example.ecommerce.controller;
 
 import com.example.ecommerce.model.Product;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.example.ecommerce.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class ProductController {
 
-    @GetMapping("/api/products")
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+
+    @Autowired
+    private ProductService productService;
+
+    @RequestMapping(value = "/api/products", method = RequestMethod.GET)
     public List<Product> getProducts() {
-        List<Product> products = new ArrayList<>();
-        products.add(new Product(1L, "Flaske", "En drikkeflaske som kan brukes til alle formål", 10.99, "/images/Bottle.jpg", "Mat og drikke"));
-        products.add(new Product(2L, "Solbriller", "Solbriller som passer perfekt til alle", 12.99, "/images/Sunglasses.jpg", "Klær"));
-        products.add(new Product(3L, "Potteplante", "En potteplante som passer til alle typer planter", 15.99, "/images/Plant pot.jpg", "Møbler"));
-        return products;
+        logger.info("Fetching all products");
+        return productService.getProducts();
     }
 }
