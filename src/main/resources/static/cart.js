@@ -9,6 +9,29 @@ document.addEventListener("DOMContentLoaded", () => {
         const backToStoreButton = document.getElementById("back-to-store");
         const clearCartButton = document.getElementById("clear-cart");
         const cartTotalElement = document.getElementById("cart-total");
+        // Add checkout button
+        const checkoutButton = document.createElement("button");
+        checkoutButton.id = "checkout-button";
+        checkoutButton.textContent = "Gå til betaling";
+        checkoutButton.classList.add("checkout-btn");
+
+        // Only show when cart has items
+        if (cart.length > 0) {
+            // Show and update order summary
+            const orderSummary = document.getElementById("order-summary");
+            orderSummary.style.display = "block";
+
+            const itemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const itemsTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            const shippingCost = 49;
+            const finalTotal = itemsTotal + shippingCost;
+
+            document.getElementById("items-count").textContent = itemsCount;
+            document.getElementById("items-total").textContent = `kr ${itemsTotal.toFixed(2)}`;
+            document.getElementById("final-total").textContent = `kr ${finalTotal.toFixed(2)}`;
+        } else {
+            document.getElementById("order-summary").style.display = "none";
+        }
 
         cartItems.innerHTML = ''; // Clear the cart items list
 
@@ -28,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
             cartTotalElement.style.display = 'block'; // Show the total price
 
             // Loop through each item in the cart and create its corresponding UI element
+            // In cart.js updateCartUI function, modify the cartItem creation:
             cart.forEach((item, index) => {
                 const cartItem = document.createElement("li");
                 cartItem.dataset.id = item.id;
@@ -37,8 +61,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button class="decrease" data-index="${index}">-</button>
                     <span class="quantity">${item.quantity}</span>
                     <button class="increase" data-index="${index}">+</button>
+                    <button class="remove-item" data-index="${index}">×</button>
                 `;
                 cartItems.appendChild(cartItem);
+            });
+
+
+
+            // Add event handler for remove button
+            document.getElementById("cart-items").addEventListener("click", (event) => {
+                // Existing code...
+
+                // Remove item button functionality
+                if (target.classList.contains("remove-item")) {
+                    cart.splice(index, 1);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartUI();
+                }
             });
 
             // Update the total price of the cart

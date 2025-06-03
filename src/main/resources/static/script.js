@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function displayProducts(products) {
         const productList = document.getElementById("product-list");
-        productList.innerHTML = ''; // Fjern tidligere produkter
+        productList.innerHTML = '';
 
         products.forEach(product => {
             const productElement = document.createElement("div");
