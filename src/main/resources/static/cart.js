@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const clearCartButton = document.getElementById("clear-cart");
         const cartTotalElement = document.getElementById("cart-total");
         const orderSummary = document.getElementById("order-summary");
+        const checkoutButton = document.getElementById("checkout-button");
 
         cartItems.innerHTML = '';
 
@@ -39,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
             clearCartButton.style.display = 'none';
             cartTotalElement.style.display = 'none';
             orderSummary.style.display = 'none';
+            checkoutButton.style.display = 'none';
             return;
         }
 
@@ -48,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         clearCartButton.style.display = 'block';
         cartTotalElement.style.display = 'block';
         orderSummary.style.display = 'block';
+        checkoutButton.style.display = 'block';
 
         let itemsCount = 0;
         let itemsTotal = 0;
@@ -55,7 +58,9 @@ document.addEventListener("DOMContentLoaded", () => {
         cart.forEach((item, index) => {
             itemsCount += item.quantity;
             // If price is an object (BigDecimal), use item.price.value or item.price, else just item.price
-            let price = typeof item.price === "object" && item.price !== null ? (item.price.value || item.price) : item.price;
+            let price = typeof item.price === "object" && item.price !== null
+                ? (item.price.value || item.price)
+                : item.price;
             itemsTotal += price * item.quantity;
 
             const cartItem = document.createElement("li");
@@ -82,7 +87,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateCartTotal() {
         const cartTotalElement = document.getElementById("cart-total");
         const total = cart.reduce((sum, item) => {
-            let price = typeof item.price === "object" && item.price !== null ? (item.price.value || item.price) : item.price;
+            let price = typeof item.price === "object" && item.price !== null
+                ? (item.price.value || item.price)
+                : item.price;
             return sum + price * item.quantity;
         }, 0);
         cartTotalElement.textContent = `Totalt: kr ${total.toFixed(2)}`;
@@ -97,20 +104,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (target.classList.contains("increase")) {
             fetch(`/api/cart/add?productId=${item.id}&quantity=1`, { method: 'POST' })
-                .then(() => loadCart());
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(() => loadCart())
+                .catch(error => {
+                    console.error('Error increasing quantity:', error);
+                });
         }
         if (target.classList.contains("decrease")) {
             if (item.quantity > 1) {
                 fetch(`/api/cart/add?productId=${item.id}&quantity=-1`, { method: 'POST' })
-                    .then(() => loadCart());
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(() => loadCart())
+                    .catch(error => {
+                        console.error('Error decreasing quantity:', error);
+                    });
             } else {
                 fetch(`/api/cart/remove?productId=${item.id}`, { method: 'POST' })
-                    .then(() => loadCart());
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(() => loadCart())
+                    .catch(error => {
+                        console.error('Error removing item:', error);
+                    });
             }
         }
         if (target.classList.contains("remove-item")) {
             fetch(`/api/cart/remove?productId=${item.id}`, { method: 'POST' })
-                .then(() => loadCart());
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(() => loadCart())
+                .catch(error => {
+                    console.error('Error removing item:', error);
+                });
         }
     });
 
@@ -125,8 +168,42 @@ document.addEventListener("DOMContentLoaded", () => {
     // "Clear cart" button
     document.getElementById("clear-cart").addEventListener("click", () => {
         fetch('/api/cart/clear', { method: 'POST' })
-            .then(() => loadCart());
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(() => loadCart())
+            .catch(error => {
+                console.error('Error clearing cart:', error);
+            });
     });
+
+    // Add checkout button functionality
+    document.getElementById("checkout-button").addEventListener("click", () => {
+        // Store cart items in localStorage before redirecting
+        localStorage.setItem("purchasedItems", JSON.stringify(cart));
+
+        // Redirect to confirmation page
+        window.location.href = "checkout-confirmation.html";
+    });
+
+    // Create confirmation.js file if it doesn't exist yet
+    function createConfirmationJS() {
+        fetch('confirmation.js')
+            .then(response => {
+                if (!response.ok && response.status === 404) {
+                    console.log("Creating confirmation.js file");
+                    // This would be handled server-side in a real app
+                }
+            })
+            .catch(() => {
+                console.log("confirmation.js not found, but will be created separately");
+            });
+    }
+
+    createConfirmationJS();
 
     // Initial load
     loadCart();

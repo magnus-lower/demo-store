@@ -7,45 +7,47 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h2>Din handlekurv</h2>
+    <h2>Din handlekurv</h2>
 
-<!-- Container for cart items -->
-<ul id="cart-items"></ul>
+    <!-- Container for cart items -->
+    <ul id="cart-items"></ul>
 
-<button id="clear-cart" style="display: none;">Tøm handlekurv</button>
-
-<!-- When the cart is empty -->
-<div id="empty-cart-message" style="display: none;">
-    <p>Handlekurven din er tom.</p>
-    <button id="back-to-store-empty">Gå til butikken</button>
-</div>
-
-<!-- Button to navigate back to the store when there are items in the cart -->
-<button id="back-to-store">Fortsett å handle</button>
-
-<div id="cart-total"></div>
-
-<!-- Add to cart.html -->
-<div id="order-summary" style="display: none;">
-    <h3>Ordredetaljer</h3>
-    <div class="summary-line">
-        <span>Antall varer:</span>
-        <span id="items-count"></span>
+    <!-- When the cart is empty -->
+    <div id="empty-cart-message" style="display: none;">
+        <p>Handlekurven din er tom.</p>
+        <button id="back-to-store-empty">Gå til butikken</button>
     </div>
-    <div class="summary-line">
-        <span>Sum varer:</span>
-        <span id="items-total"></span>
-    </div>
-    <div class="summary-line">
-        <span>Frakt:</span>
-        <span id="shipping-cost">kr 49.00</span>
-    </div>
-    <div class="summary-line total">
-        <span>Totalt:</span>
-        <span id="final-total"></span>
-    </div>
-</div>
 
-<script src="cart.js"></script>
+    <div id="cart-total"></div>
+
+    <!-- Order summary details -->
+    <div id="order-summary" style="display: none;">
+        <h3>Ordredetaljer</h3>
+        <div class="summary-line">
+            <span>Antall varer:</span>
+            <span id="items-count"></span>
+        </div>
+        <div class="summary-line">
+            <span>Sum varer:</span>
+            <span id="items-total"></span>
+        </div>
+        <div class="summary-line">
+            <span>Frakt:</span>
+            <span id="shipping-cost">kr 49.00</span>
+        </div>
+        <div class="summary-line total">
+            <span>Totalt:</span>
+            <span id="final-total"></span>
+        </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="cart-actions">
+        <button id="clear-cart" style="display: none;">Tøm handlekurv</button>
+        <button id="back-to-store" style="display: none;">Fortsett å handle</button>
+        <button id="checkout-button" class="checkout-btn" style="display: none;">Gå til betaling</button>
+    </div>
+
+    <script src="cart.js"></script>
 </body>
 </html>
