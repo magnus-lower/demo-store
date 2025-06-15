@@ -1,16 +1,7 @@
-function toggleCategories() {
-    const categoryList = document.getElementById('category-list');
-    if (categoryList.style.display === 'none' || categoryList.style.display === '') {
-        categoryList.style.display = 'flex';
-    } else {
-        categoryList.style.display = 'none';
-    }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
     let allProducts = [];
 
+    // Fetch products from backend
     fetch("/api/products")
         .then(response => response.json())
         .then(products => {
@@ -18,8 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
             displayProducts(products);
             updateCartCount();
         })
-        .catch(error => console.error("Feil ved henting av produkter:", error));
+        .catch(error => console.error("Error fetching products:", error));
 
+    // Display products in the UI
     function displayProducts(products) {
         const productList = document.getElementById("product-list");
         productList.innerHTML = '';
@@ -33,15 +25,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 <img src="${product.imageUrl}" alt="${product.name}" style="width:100%; height:auto;">
                 <p>${product.description}</p>
                 <p><strong>kr ${product.price}</strong></p>
-                <button onclick="addToCart(${product.id}, '${product.name}', ${product.price}, '${product.imageUrl}')">Legg i handlekurv</button>
+                <button onclick="addToCart(${product.id})">Legg i handlekurv</button>
             `;
             productList.appendChild(productElement);
         });
     }
 
+    // Filter products by category and search term
     window.filterProducts = (category = 'Alle') => {
         let filteredProducts = allProducts;
-
         const searchTerm = document.getElementById("search-box").value.toLowerCase();
 
         if (searchTerm) {
@@ -58,42 +50,53 @@ document.addEventListener("DOMContentLoaded", () => {
         displayProducts(filteredProducts);
     };
 
-    // Function to update the cart count in the UI
+    // Update cart count by fetching from backend
     function updateCartCount() {
-        const cartCount = document.getElementById("cart-count");
-        const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-
-        // Only display the count if there are items in the cart
-        if (totalItems > 0) {
-            cartCount.textContent = `(${totalItems})`;
-        } else {
-            cartCount.textContent = ''; // Clear the count if the cart is empty
-        }
+        fetch('/api/cart')
+            .then(response => response.json())
+            .then(cart => {
+                const cartCount = document.getElementById("cart-count");
+                const totalItems = cart.reduce((total, item) => total + (item.quantity || 0), 0);
+                cartCount.textContent = totalItems > 0 ? `(${totalItems})` : '';
+            })
+            .catch(() => {
+                document.getElementById("cart-count").textContent = '';
+            });
     }
 
-    window.addToCart = (id, name, price, imageUrl) => {
-        const item = cart.find(product => product.id === id);
-        if (item) {
-            item.quantity++;
-        } else {
-            cart.push({ id, name, price, imageUrl, quantity: 1 });
-        }
-        localStorage.setItem('cart', JSON.stringify(cart));
-
-        updateCartCount();
-
-        const notification = document.getElementById("cart-notification");
-        notification.classList.add("show");
-
-        setTimeout(() => {
-            notification.classList.remove("show");
-        }, 3000);
+    // Add to cart using backend endpoint
+    window.addToCart = (productId) => {
+        fetch(`/api/cart/add?productId=${productId}&quantity=1`, { method: 'POST' })
+            .then(response => response.json())
+            .then(() => {
+                updateCartCount();
+                const notification = document.getElementById("cart-notification");
+                notification.classList.add("show");
+                setTimeout(() => {
+                    notification.classList.remove("show");
+                }, 3000);
+            })
+            .catch(() => {
+                alert("Could not add product to cart.");
+            });
     };
 
+    // Toggle category list
+    window.toggleCategories = () => {
+        const categoryList = document.getElementById('category-list');
+        if (categoryList.style.display === 'none' || categoryList.style.display === '') {
+            categoryList.style.display = 'flex';
+        } else {
+            categoryList.style.display = 'none';
+        }
+    };
+
+    // View cart button
     document.getElementById("view-cart").addEventListener("click", () => {
         window.location.href = "cart.html";
     });
 
+    // Search box input
     document.getElementById("search-box").addEventListener("input", () => {
         filterProducts();
     });
