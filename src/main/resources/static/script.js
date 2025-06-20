@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    const categoryList = document.getElementById('category-list');
+    categoryList.style.display = 'none';
+
     let allProducts = [];
 
     // Ensure user icon works
@@ -96,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.toggleCategories = () => {
         const categoryList = document.getElementById('category-list');
-        if (categoryList.style.display === 'none' || categoryList.style.display === '') {
+        if (categoryList.style.display === 'none') {
             categoryList.style.display = 'flex';
         } else {
             categoryList.style.display = 'none';
