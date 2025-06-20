@@ -2,6 +2,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let allProducts = [];
 
+    // Ensure user icon works
+    const userIcon = document.querySelector('.user-icon');
+    if (userIcon) {
+        userIcon.addEventListener('click', () => {
+            window.location.href = 'auth.html';
+        });
+    }
+
+    // Ensure cart icon works consistently
+    const cartIcon = document.querySelector('.cart-icon');
+    if (cartIcon) {
+        cartIcon.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'cart.html';
+        });
+    }
+
     // Fetch products from backend
     fetch("/api/products")
         .then(response => response.json())
