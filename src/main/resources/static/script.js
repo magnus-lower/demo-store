@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+
     let allProducts = [];
 
     // Fetch products from backend
@@ -11,11 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(error => console.error("Error fetching products:", error));
 
-    // Display products in the UI
     function displayProducts(products) {
         const productList = document.getElementById("product-list");
         productList.innerHTML = '';
-
         products.forEach(product => {
             const productElement = document.createElement("div");
             productElement.className = "product";
@@ -31,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Filter products by category and search term
     window.filterProducts = (category = 'Alle') => {
         let filteredProducts = allProducts;
         const searchTerm = document.getElementById("search-box").value.toLowerCase();
@@ -50,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
         displayProducts(filteredProducts);
     };
 
-    // Update cart count by fetching from backend
     function updateCartCount() {
         fetch('/api/cart')
             .then(response => response.json())
@@ -64,7 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
-    // Add to cart using backend endpoint
     window.addToCart = (productId) => {
         fetch(`/api/cart/add?productId=${productId}&quantity=1`, { method: 'POST' })
             .then(response => response.json())
@@ -81,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     };
 
-    // Toggle category list
     window.toggleCategories = () => {
         const categoryList = document.getElementById('category-list');
         if (categoryList.style.display === 'none' || categoryList.style.display === '') {
@@ -91,12 +86,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // View cart button
     document.getElementById("view-cart").addEventListener("click", () => {
         window.location.href = "cart.html";
     });
 
-    // Search box input
     document.getElementById("search-box").addEventListener("input", () => {
         filterProducts();
     });

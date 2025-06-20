@@ -454,3 +454,98 @@ button:hover {
 .primary-button:hover {
     background-color: #45a049;
 }
+
+/* User profile styles - add to styles.css */
+.user-profile-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.auth-button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    border: none;
+}
+
+.register-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.profile-button {
+    background-color: #f1f1f1;
+    color: #333;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.profile-dropdown {
+    right: 0;
+    left: auto;
+    min-width: 150px;
+}
+
+.user-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #f1f1f1;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: absolute;
+  right: -50px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.user-icon:hover {
+  background-color: #e0e0e0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.user-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Update the search container to remove padding that made space for the user icon */
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 25px;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    position: relative; /* Keep position relative */
+}
+
+/* Add a wrapper to contain both search and user icon */
+.header-controls {
+    position: relative;
+    width: 100%;
+    max-width: 650px; /* Slightly wider to accommodate the icon */
+    margin: 20px auto;
+}
+
+/* Update user profile container positioning */
+.user-profile-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+}

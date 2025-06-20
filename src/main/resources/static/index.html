@@ -5,12 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demobutikk</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 
 <div class="search-container">
     <a href="#" class="store-name" onclick="location.reload()">demo-butikk</a>
     <input type="text" class="search-input" id="search-box" placeholder="Hva ser du etter?" onkeyup="filterProducts()">
+    <a href="auth.html" class="user-icon" id="user-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+    </a>
+</div>
+
+<div class="user-profile-container">
+    <div id="not-logged-in" style="display: none;">
+        <button onclick="window.location.href='login.html'" class="auth-button login-button">Logg inn</button>
+    </div>
+    <div id="logged-in" style="display: none;">
+        <div class="user-dropdown">
+            <button class="user-dropdown-button">
+                <span id="user-greeting">Hei</span>
+                <i class="dropdown-icon">▼</i>
+            </button>
+            <div class="dropdown-content">
+                <a href="profile.html">Min profil</a>
+                <a href="orders.html">Mine bestillinger</a>
+                <a href="settings.html">Innstillinger</a>
+                <hr>
+                <a href="#" id="logout-button">Logg ut</a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div id="cart-notification" class="cart-notification">
