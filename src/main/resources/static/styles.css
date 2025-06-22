@@ -731,32 +731,7 @@ button:hover {
     min-width: 150px;
 }
 
-.user-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: #f1f1f1;
-  color: #333;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  position: absolute;
-  right: -50px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.user-icon:hover {
-  background-color: #e0e0e0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.user-icon svg {
-  width: 20px;
-  height: 20px;
-}
+/* Remove the duplicate user-icon styling that causes positioning issues */
 
 /* Update the search container to remove padding that made space for the user icon */
 .search-container {

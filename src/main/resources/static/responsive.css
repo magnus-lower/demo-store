@@ -108,6 +108,7 @@
     cursor: pointer;
     z-index: 10;
     pointer-events: auto;
+    position: relative; /* Changed from absolute positioning */
 }
 
 .user-icon:hover {
