@@ -206,7 +206,7 @@ button:hover {
 .cart-notification.show {
     display: flex;
     opacity: 1;
-    top: 40px;
+    top: 200px;
 }
 
 /* Cart page styling */
