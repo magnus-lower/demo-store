@@ -698,8 +698,8 @@ button:hover {
     position: absolute;
     top: 20px;
     right: 20px;
-    display: flex;
     gap: 10px;
+    display: none !important;
 }
 
 .auth-button {
@@ -731,8 +731,6 @@ button:hover {
     min-width: 150px;
 }
 
-/* Remove the duplicate user-icon styling that causes positioning issues */
-
 /* Update the search container to remove padding that made space for the user icon */
 .search-container {
     display: flex;
@@ -753,6 +751,16 @@ button:hover {
     width: 100%;
     max-width: 650px; /* Slightly wider to accommodate the icon */
     margin: 20px auto;
+}
+
+/* Header actions - positioned to the right */
+.header-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-shrink: 0;
+    z-index: 100;
+    position: relative;
 }
 
 /* Update user profile container positioning */

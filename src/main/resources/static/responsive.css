@@ -85,16 +85,8 @@
     background-color: #45a049;
 }
 
-/* Header actions - positioned to the right */
-.header-actions {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    flex-shrink: 0;
-}
-
 /* Updated styling for user icon */
-.user-icon {
+.user-icon, .cart-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -106,7 +98,7 @@
     text-decoration: none;
     transition: all 0.3s ease;
     cursor: pointer;
-    z-index: 10;
+    z-index: 101;
     pointer-events: auto;
     position: relative; /* Changed from absolute positioning */
 }
@@ -114,24 +106,6 @@
 .user-icon:hover {
     background-color: #e0e0e0;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-/* Updated styling for cart icon */
-.cart-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: #f1f1f1;
-    color: #333;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    position: relative;
-    cursor: pointer;
-    z-index: 10;
-    pointer-events: auto;
 }
 
 .cart-icon:hover {
