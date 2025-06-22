@@ -1,45 +1,50 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     const categoryList = document.getElementById('category-list');
     categoryList.style.display = 'none';
 
     let allProducts = [];
 
-    // Fix for user icon click handling
-    const userIcon = document.querySelector('.user-icon');
+    const userIcon = document.getElementById('user-icon');
+    const cartIcon = document.getElementById('cart-icon');
+    const userProfile = document.getElementById('user-profile');
+
+    // Hent login-status fra localStorage
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    // Vis korrekt brukergrensesnitt basert på login-status
+    if (token && user.firstName) {
+        document.getElementById('logged-in').style.display = 'block';
+        document.getElementById('not-logged-in').style.display = 'none';
+        document.getElementById('user-greeting').textContent = `Hei, ${user.firstName}`;
+    } else {
+        document.getElementById('not-logged-in').style.display = 'block';
+        document.getElementById('logged-in').style.display = 'none';
+    }
+
+    // Brukerikon logikk
     if (userIcon) {
-        console.log('User icon found, adding click handler');
         userIcon.addEventListener('click', (e) => {
             e.preventDefault();
-            e.stopPropagation();
-            console.log('User icon clicked');
-            window.location.href = 'auth.html';
+            if (token && user.firstName) {
+                // Logget inn -> toggle dropdown
+                userProfile.classList.toggle('active');
+            } else {
+                // Ikke logget inn -> gå til auth.html
+                window.location.href = 'auth.html';
+            }
         });
-
-        // Also handle via href as backup
-        userIcon.href = 'auth.html';
-    } else {
-        console.log('User icon not found');
     }
 
-    // Fix for cart icon click handling
-    const cartIcon = document.querySelector('.cart-icon');
+    // Handle cart icon click
     if (cartIcon) {
-        console.log('Cart icon found, adding click handler');
         cartIcon.addEventListener('click', (e) => {
             e.preventDefault();
-            e.stopPropagation();
-            console.log('Cart icon clicked');
             window.location.href = 'cart.html';
         });
-
-        // Also handle via href as backup
-        cartIcon.href = 'cart.html';
-    } else {
-        console.log('Cart icon not found');
     }
 
-    // Fetch products from backend
+    // Hent produkter fra backend
     fetch("/api/products")
         .then(response => response.json())
         .then(products => {
@@ -115,7 +120,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     window.toggleCategories = () => {
-        const categoryList = document.getElementById('category-list');
         if (categoryList.style.display === 'none') {
             categoryList.style.display = 'flex';
         } else {
@@ -123,15 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Check if view-cart button exists before adding event listener
-    const viewCartButton = document.getElementById("view-cart");
-    if (viewCartButton) {
-        viewCartButton.addEventListener("click", () => {
-            window.location.href = "cart.html";
-        });
-    }
-
-    // Add search functionality
+    // Søke-input
     const searchBox = document.getElementById("search-box");
     if (searchBox) {
         searchBox.addEventListener("input", () => {
@@ -139,11 +135,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Debug: Check if elements exist
-    console.log('Script loaded. Elements found:', {
-        userIcon: !!document.querySelector('.user-icon'),
-        cartIcon: !!document.querySelector('.cart-icon'),
-        searchBox: !!document.getElementById("search-box"),
-        viewCart: !!document.getElementById("view-cart")
-    });
+    // Debug logg
+    console.log("Script loaded successfully");
 });
