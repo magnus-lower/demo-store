@@ -5,21 +5,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let allProducts = [];
 
-    // Ensure user icon works
+    // Fix for user icon click handling
     const userIcon = document.querySelector('.user-icon');
     if (userIcon) {
-        userIcon.addEventListener('click', () => {
+        console.log('User icon found, adding click handler');
+        userIcon.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('User icon clicked');
             window.location.href = 'auth.html';
         });
+
+        // Also handle via href as backup
+        userIcon.href = 'auth.html';
+    } else {
+        console.log('User icon not found');
     }
 
-    // Ensure cart icon works consistently
+    // Fix for cart icon click handling
     const cartIcon = document.querySelector('.cart-icon');
     if (cartIcon) {
+        console.log('Cart icon found, adding click handler');
         cartIcon.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
+            console.log('Cart icon clicked');
             window.location.href = 'cart.html';
         });
+
+        // Also handle via href as backup
+        cartIcon.href = 'cart.html';
+    } else {
+        console.log('Cart icon not found');
     }
 
     // Fetch products from backend
@@ -106,11 +123,27 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    document.getElementById("view-cart").addEventListener("click", () => {
-        window.location.href = "cart.html";
-    });
+    // Check if view-cart button exists before adding event listener
+    const viewCartButton = document.getElementById("view-cart");
+    if (viewCartButton) {
+        viewCartButton.addEventListener("click", () => {
+            window.location.href = "cart.html";
+        });
+    }
 
-    document.getElementById("search-box").addEventListener("input", () => {
-        filterProducts();
+    // Add search functionality
+    const searchBox = document.getElementById("search-box");
+    if (searchBox) {
+        searchBox.addEventListener("input", () => {
+            filterProducts();
+        });
+    }
+
+    // Debug: Check if elements exist
+    console.log('Script loaded. Elements found:', {
+        userIcon: !!document.querySelector('.user-icon'),
+        cartIcon: !!document.querySelector('.cart-icon'),
+        searchBox: !!document.getElementById("search-box"),
+        viewCart: !!document.getElementById("view-cart")
     });
 });
