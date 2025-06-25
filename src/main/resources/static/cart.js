@@ -180,13 +180,107 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     });
 
-    // Add checkout button functionality
+    // Updated checkout button functionality
     document.getElementById("checkout-button").addEventListener("click", () => {
-        // Store cart items in localStorage before redirecting
-        localStorage.setItem("purchasedItems", JSON.stringify(cart));
+        // Check if user is logged in
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('Du må være logget inn for å fullføre bestillingen');
+            window.location.href = 'login.html';
+            return;
+        }
 
-        // Redirect to confirmation page
-        window.location.href = "checkout-confirmation.html";
+        // Check if cart has items
+        if (cart.length === 0) {
+            alert('Handlekurven er tom');
+            return;
+        }
+
+        // Prepare checkout data
+        const items = {};
+        cart.forEach(item => {
+            items[item.id] = item.quantity;
+        });
+
+        const checkoutData = {
+            street: "Testgate 1", // Default address - in real app this would come from a form
+            city: "Oslo",
+            zipCode: "0001",
+            country: "Norge",
+            items: items
+        };
+
+        console.log('Sending checkout data:', checkoutData);
+        console.log('Using token:', token ? 'Token exists' : 'No token');
+
+        // Send checkout request to backend
+        fetch('/api/checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(checkoutData)
+        })
+            .then(response => {
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    // Try to get error message from response
+                    return response.text().then(errorText => {
+                        console.error('Error response:', errorText);
+                        console.error('Response status:', response.status);
+
+                        if (response.status === 401) {
+                            throw new Error('Du må være logget inn for å bestille');
+                        } else if (response.status === 403) {
+                            throw new Error('Du har ikke tilgang til å bestille');
+                        } else if (response.status === 409) {
+                            throw new Error('Ikke nok varer på lager');
+                        } else if (response.status === 500) {
+                            throw new Error(`Server-feil: ${errorText}`);
+                        } else {
+                            throw new Error(`Feil ${response.status}: ${errorText || 'Ukjent feil'}`);
+                        }
+                    });
+                }
+            })
+            .then(orderResponse => {
+                console.log('Order created successfully:', orderResponse);
+
+                // Store cart items for confirmation page (for display purposes)
+                localStorage.setItem("purchasedItems", JSON.stringify(cart));
+
+                // Store order details
+                localStorage.setItem("orderDetails", JSON.stringify(orderResponse));
+
+                // Clear cart on server
+                return fetch('/api/cart/clear', { method: 'POST' });
+            })
+            .then(() => {
+                // Redirect to confirmation page
+                window.location.href = "checkout-confirmation.html";
+            })
+            .catch(error => {
+                console.error('Checkout error:', error);
+
+                if (error.message.includes('User not found') || error.message.includes('magnus.lower@gmail.com')) {
+                    alert('Din bruker-sesjon er utløpt. Du blir omdirigert til pålogging.');
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    window.location.href = 'login.html';
+                } else if (error.message.includes('logget inn') || error.message.includes('tilgang')) {
+                    alert('Du må være logget inn for å bestille');
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    window.location.href = 'login.html';
+                } else {
+                    alert(error.message || 'Det oppstod en feil under bestillingen. Prøv igjen.');
+                }
+            });
     });
 
     // Create confirmation.js file if it doesn't exist yet

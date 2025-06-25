@@ -39,7 +39,15 @@ body {
     background-color: #f1f1f1;
     min-width: 160px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 1000;
+    border-radius: 4px;
+    right: 0;
+    top: 100%;
+}
+
+/* Show dropdown when it has 'show' class */
+.dropdown-content.show {
+    display: block;
 }
 
 /* Styling for individual links within the dropdown content */
@@ -48,11 +56,18 @@ body {
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    transition: background-color 0.3s;
 }
 
 /* Hover effect for dropdown content links */
 .dropdown-content a:hover {
     background-color: #ddd;
+}
+
+.dropdown-content hr {
+    margin: 5px 0;
+    border: none;
+    border-top: 1px solid #ddd;
 }
 
 /* Show dropdown content when hovering over the dropdown container */
@@ -581,6 +596,7 @@ button:hover {
     border-top: 1px solid #ddd;
 }
 
+/* User wrapper and profile container */
 .user-wrapper {
     position: relative;
 }
@@ -607,14 +623,39 @@ button:hover {
     pointer-events: auto;
 }
 
-.user-icon i, .cart-icon i {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* User dropdown styling */
+.user-dropdown {
+    position: relative;
 }
 
+.user-dropdown-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s;
+}
+
+.user-dropdown-button:hover {
+    background-color: #45a049;
+}
+
+.dropdown-icon {
+    font-size: 12px;
+    transition: transform 0.3s;
+}
+
+.user-dropdown-button:hover .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+/* Auth buttons */
 .auth-button {
     padding: 8px 16px;
     border-radius: 4px;
@@ -626,6 +667,12 @@ button:hover {
 .register-button {
     background-color: #4CAF50;
     color: white;
+}
+
+.login-button {
+    background-color: #f1f1f1;
+    color: #333;
+    border: 1px solid #ddd;
 }
 
 .profile-button {
@@ -644,7 +691,147 @@ button:hover {
     min-width: 150px;
 }
 
-/* Update the search container to remove padding that made space for the user icon */
+/* User icon and cart icon styling */
+.user-icon, .cart-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    z-index: 101;
+    pointer-events: auto;
+    position: relative;
+}
+
+.user-icon:hover {
+    background-color: #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.cart-icon:hover {
+    background-color: #e0e0e0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.user-icon i, .cart-icon i {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #f44336;
+    color: white;
+    font-size: 12px;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+}
+
+/* Modal styling */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+}
+
+.close {
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #f1f1f1;
+    text-decoration: none;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+/* Orders styling */
+.orders-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.order-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.order-header h4 {
+    margin: 0;
+    color: #333;
+}
+
+.order-date {
+    color: #666;
+    font-size: 14px;
+}
+
+.order-details p {
+    margin: 5px 0;
+}
+
+/* Update the search container */
 .search-container {
     display: flex;
     max-width: 400px;
@@ -656,7 +843,7 @@ button:hover {
     margin: 0;
     box-shadow: none;
     padding: 0;
-    position: relative; /* Keep position relative */
+    position: relative;
 }
 
 /* Header actions - positioned to the right */
@@ -745,50 +932,6 @@ button:hover {
     background-color: #45a049;
 }
 
-/* Updated styling for user icon */
-.user-icon, .cart-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: #f1f1f1;
-    color: #333;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    z-index: 101;
-    pointer-events: auto;
-    position: relative;
-}
-
-.user-icon:hover {
-    background-color: #e0e0e0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.cart-icon:hover {
-    background-color: #e0e0e0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.cart-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: #f44336;
-    color: white;
-    font-size: 12px;
-    min-width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2px;
-}
-
 /* Navigation */
 .main-nav {
     display: none;
@@ -814,13 +957,13 @@ button:hover {
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
-    width: 220px; /* Adjust width to accommodate new padding */
+    width: 220px;
     text-align: center;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
     display: flex;
-    flex-direction: column; /* Optional: adds rounded corners */
-    background-color: #fff; /* Optional: ensures a clean background */
+    flex-direction: column;
+    background-color: #fff;
 }
 
 .product:hover {
@@ -936,6 +1079,11 @@ button:hover {
         right: 5%;
         left: 5%;
     }
+
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
 }
 
 @media (max-width: 480px) {
@@ -977,5 +1125,10 @@ button:hover {
     .product button {
         padding: 8px;
         font-size: 12px;
+    }
+
+    .user-dropdown-button {
+        padding: 8px 12px;
+        font-size: 14px;
     }
 }

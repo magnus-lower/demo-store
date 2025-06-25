@@ -21,31 +21,30 @@
         </div>
 
         <div class="header-actions">
-
-            <!-- Brukerikon + dropdown -->
+            <!-- Brukerikon/dropdown - forbedret -->
             <div class="user-wrapper">
-                <a href="#" class="user-icon" id="user-icon">
-                    <i class="fas fa-user"></i>
-                </a>
+                <!-- Ikke logget inn -->
+                <div id="not-logged-in">
+                    <a href="#" class="user-icon" id="user-icon">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </div>
 
-                <div class="user-profile-container" id="user-profile">
-                    <div id="not-logged-in" style="display: none;">
-                        <button onclick="window.location.href='login.html'" class="auth-button login-button">Logg inn</button>
-                    </div>
-
-                    <div id="logged-in" style="display: none;">
-                        <div class="user-dropdown">
-                            <button class="user-dropdown-button">
-                                <span id="user-greeting">Hei</span>
-                                <i class="dropdown-icon">▼</i>
-                            </button>
-                            <div class="dropdown-content">
-                                <a href="profile.html">Min profil</a>
-                                <a href="orders.html">Mine bestillinger</a>
-                                <a href="settings.html">Innstillinger</a>
-                                <hr>
-                                <a href="#" id="logout-button">Logg ut</a>
-                            </div>
+                <!-- Logget inn -->
+                <div id="logged-in" style="display: none;">
+                    <div class="user-dropdown">
+                        <button class="user-dropdown-button" id="user-dropdown-btn">
+                            <span id="user-greeting">Hei</span>
+                            <i class="dropdown-icon fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-content" id="user-dropdown-content">
+                            <a href="#" id="view-orders">
+                                <i class="fas fa-shopping-bag"></i> Mine bestillinger
+                            </a>
+                            <hr>
+                            <a href="#" id="logout-button">
+                                <i class="fas fa-sign-out-alt"></i> Logg ut
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -64,6 +63,21 @@
     <span class="notification-icon">✔️</span>
     <span>Varen er lagt til i handlekurven!</span>
     <button class="notification-button" onclick="window.location.href='cart.html'">Vis handlekurv</button>
+</div>
+
+<!-- Orders Modal -->
+<div id="orders-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Mine bestillinger</h2>
+            <span class="close" id="close-orders-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div id="orders-list">
+                <p>Laster bestillinger...</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <nav class="main-nav">
