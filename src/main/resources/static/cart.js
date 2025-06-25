@@ -238,8 +238,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             throw new Error('Du må være logget inn for å bestille');
                         } else if (response.status === 403) {
                             throw new Error('Du har ikke tilgang til å bestille');
-                        } else if (response.status === 409) {
-                            throw new Error('Ikke nok varer på lager');
                         } else if (response.status === 500) {
                             throw new Error(`Server-feil: ${errorText}`);
                         } else {

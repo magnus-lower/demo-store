@@ -157,6 +157,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         displayProducts(filteredProducts);
+
+        // Skjul kategorilisten etter at man har valgt en kategori (på mobil)
+        if (window.innerWidth <= 768) {
+            categoryList.style.display = 'none';
+        }
     };
 
     function updateCartCount() {
@@ -189,13 +194,30 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     };
 
+    // Forbedret toggleCategories funksjon som fungerer på både desktop og mobil
     window.toggleCategories = () => {
-        if (categoryList.style.display === 'none') {
+        const currentDisplay = window.getComputedStyle(categoryList).display;
+
+        if (currentDisplay === 'none') {
             categoryList.style.display = 'flex';
         } else {
             categoryList.style.display = 'none';
         }
     };
+
+    // Lukk kategorilisten når man klikker utenfor (kun på mobil)
+    document.addEventListener('click', (e) => {
+        const dropdownButton = document.querySelector('.dropdown-button');
+        const categoryListElement = document.getElementById('category-list');
+
+        // Sjekk om vi er på mobil og om kategorilisten er synlig
+        if (window.innerWidth <= 768 && categoryListElement.style.display === 'flex') {
+            // Hvis klikket ikke var på dropdown-knappen eller inne i kategorilisten
+            if (!dropdownButton.contains(e.target) && !categoryListElement.contains(e.target)) {
+                categoryListElement.style.display = 'none';
+            }
+        }
+    });
 
     // Søke-input
     const searchBox = document.getElementById("search-box");
