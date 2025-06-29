@@ -15,15 +15,15 @@ document.addEventListener('DOMContentLoaded', function() {
         let isValid = true;
 
         if (!email) {
-            document.getElementById('email-error').textContent = 'Email is required';
+            document.getElementById('email-error').textContent = 'E-post er påkrevd';
             isValid = false;
         } else if (!/\S+@\S+\.\S+/.test(email)) {
-            document.getElementById('email-error').textContent = 'Email is invalid';
+            document.getElementById('email-error').textContent = 'E-post er ugyldig';
             isValid = false;
         }
 
         if (!password) {
-            document.getElementById('password-error').textContent = 'Password is required';
+            document.getElementById('password-error').textContent = 'Passord er påkrevd';
             isValid = false;
         }
 
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.ok) {
                     return response.json();
                 } else {
-                    throw new Error('Invalid email or password');
+                    throw new Error('Ugyldig e-post eller passord');
                 }
             })
             .then(data => {

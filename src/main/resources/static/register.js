@@ -16,37 +16,37 @@ document.addEventListener('DOMContentLoaded', function() {
         let isValid = true;
 
         if (!firstName) {
-            document.getElementById('firstName-error').textContent = 'First name is required';
+            document.getElementById('firstName-error').textContent = 'Fornavn er påkrevd';
             isValid = false;
         }
 
         if (!lastName) {
-            document.getElementById('lastName-error').textContent = 'Last name is required';
+            document.getElementById('lastName-error').textContent = 'Etternavn er påkrevd';
             isValid = false;
         }
 
         if (!email) {
-            document.getElementById('email-error').textContent = 'Email is required';
+            document.getElementById('email-error').textContent = 'E-postadresse er påkrevd';
             isValid = false;
         } else if (!/\S+@\S+\.\S+/.test(email)) {
-            document.getElementById('email-error').textContent = 'Email is invalid';
+            document.getElementById('email-error').textContent = 'E-postadressen er ugyldig';
             isValid = false;
         }
 
         if (!password) {
-            document.getElementById('password-error').textContent = 'Password is required';
+            document.getElementById('password-error').textContent = 'Passord er påkrevd';
             isValid = false;
         } else if (password.length < 8) {
-            document.getElementById('password-error').textContent = 'Password must be at least 8 characters';
+            document.getElementById('password-error').textContent = 'Passordet må være minst 8 tegn langt';
             isValid = false;
         } else if (!/[A-Z]/.test(password)) {
-            document.getElementById('password-error').textContent = 'Password must contain at least one uppercase letter';
+            document.getElementById('password-error').textContent = 'Passordet må inneholde minst én stor bokstav';
             isValid = false;
         } else if (!/[a-z]/.test(password)) {
-            document.getElementById('password-error').textContent = 'Password must contain at least one lowercase letter';
+            document.getElementById('password-error').textContent = 'Passordet må inneholde minst én liten bokstav';
             isValid = false;
         } else if (!/\d/.test(password)) {
-            document.getElementById('password-error').textContent = 'Password must contain at least one number';
+            document.getElementById('password-error').textContent = 'Passordet må inneholde minst ett tall';
             isValid = false;
         }
 
@@ -70,13 +70,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     window.location.href = 'login.html?registered=true';
                 } else {
                     return response.json().then(data => {
-                        throw new Error(data.message || 'Registration failed');
+                        throw new Error(data.message || 'Registreringen mislyktes');
                     });
                 }
             })
             .catch(error => {
                 if (error.message.includes('Email already in use')) {
-                    document.getElementById('email-error').textContent = 'Email already in use';
+                    document.getElementById('email-error').textContent = 'E-postadressen er allerede i bruk';
                 } else {
                     alert(error.message);
                 }

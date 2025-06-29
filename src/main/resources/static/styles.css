@@ -201,7 +201,7 @@ button:hover {
 /* Oppdatert styling for cart notification */
 .cart-notification {
     position: fixed;
-    top: 400px;
+    top: -100px;
     right: 20px;
     background-color: #323232;
     color: white;
