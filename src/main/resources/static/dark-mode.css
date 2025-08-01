@@ -1,0 +1,156 @@
+/* Settings Panel Dark Mode */
+.dark-mode .settings-dropdown {
+    background: var(--card-bg);
+    border-color: #444;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .settings-item {
+    border-bottom: 1px solid #333;
+}
+
+.dark-mode .settings-item-label {
+    color: var(--text-color);
+}
+
+.dark-mode .settings-item-label i {
+    color: #999;
+}
+
+.dark-mode .settings-toggle {
+    color: var(--text-color);
+}
+
+.dark-mode .settings-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.dark-mode .theme-slider {
+    background: #555;
+}
+
+.dark-mode .theme-slider:before {
+    background-color: #ddd;
+}
+
+.dark-mode input:checked + .theme-slider {
+    background-color: #4CAF50;
+}
+
+.dark-mode input:checked + .theme-slider:before {
+    background-color: white;
+}
+
+/* Improve selector specificity and coverage for dark mode */
+html.dark-mode,
+body.dark-mode,
+.dark-mode section,
+.dark-mode .hero,
+.dark-mode .projects-container,
+.dark-mode .project-wrapper,
+.dark-mode .project-item,
+.dark-mode .about,
+.dark-mode .education,
+.dark-mode .skills,
+.dark-mode .contact,
+.dark-mode .form-group,
+.dark-mode #contact-form {
+    --bg-color: #121212;
+    --text-color: white;
+    --nav-bg: #222;
+    --card-bg: #1e1e1e;
+    --footer-bg: #222;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Ensure specific components look good in dark mode */
+.dark-mode .project-item {
+    background-color: var(--card-bg);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Programming Language Headers in Dark Mode */
+.dark-mode .project-lang {
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode .project-item:hover {
+    background-color: #2a2a2a;
+}
+
+/* Style form elements in dark mode */
+.dark-mode input,
+.dark-mode textarea {
+    background-color: #2a2a2a;
+    color: white;
+    border-color: #444;
+}
+
+/* Keep the scroll button styling */
+.dark-mode #scroll-top,
+#scroll-top.dark-mode {
+    background-color: #1a1a1a;
+    color: #3498db;
+    border: 1px solid #3498db;
+}
+
+/* Keep your existing theme toggle styles */
+.theme-toggle {
+    position: relative;
+    width: 56px;
+    height: 28px;
+}
+
+.theme-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.2);
+    transition: 0.4s;
+    border-radius: 28px;
+    overflow: hidden;
+}
+
+.theme-slider:before {
+    position: absolute;
+    content: "☀️";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    background: #FFD43B;
+    box-shadow: 0 0 10px rgba(255, 211, 67, 0.5);
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .theme-slider {
+    background: rgba(30, 30, 50, 0.6);
+}
+
+input:checked + .theme-slider:before {
+    transform: translateX(28px);
+    content: "🌙";
+    background: #3498db;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+}
+
+.theme-slider:hover:before {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}

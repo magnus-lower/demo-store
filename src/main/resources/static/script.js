@@ -331,6 +331,18 @@ document.addEventListener("DOMContentLoaded", () => {
         // Ingen melding - bare stille utlogging
     }
 
+    // Initialize settings panel
+    if (typeof initSettingsPanel === 'function') {
+        initSettingsPanel();
+    } else {
+        // If settingsPanel.js is loaded as a module
+        import('./settingsPanel.js').then(mod => {
+            mod.initSettingsPanel();
+        }).catch(err => {
+            console.log('Settings panel not available:', err);
+        });
+    }
+
     // Debug logg
     console.log("Script loaded successfully");
 });
