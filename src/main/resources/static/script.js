@@ -363,26 +363,75 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Logg ut funksjon
     function logout() {
-        // Lukk dropdown først
+        // Lukk dropdown først med smooth animasjon
         const dropdownContent = document.getElementById('user-dropdown-content');
         if (dropdownContent) {
             dropdownContent.classList.remove('show');
         }
 
-        // Fjern token og brukerdata fra localStorage
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        // Legg til logout animasjon på bruker-ikon
+        const userIcon = document.querySelector('.user-icon');
+        if (userIcon) {
+            userIcon.classList.add('logging-out');
+        }
 
-        // Oppdater brukergrensesnitt
-        updateUserInterface();
+        // Vis logout-notifikasjon
+        showLogoutNotification();
 
-        // Tøm handlekurv
-        fetch('/api/cart/clear', { method: 'POST' }).catch(() => {});
+        // Vent litt før vi gjør faktiske endringer for smooth animasjon
+        setTimeout(() => {
+            // Fjern token og brukerdata fra localStorage
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
 
-        // Oppdater handlekurv-teller
-        updateCartCount();
+            // Oppdater brukergrensesnitt
+            updateUserInterface();
 
-        // Ingen melding - bare stille utlogging
+            // Tøm handlekurv
+            fetch('/api/cart/clear', { method: 'POST' }).catch(() => {});
+
+            // Oppdater handlekurv-teller
+            updateCartCount();
+
+            // Fjern logout-animasjon
+            if (userIcon) {
+                userIcon.classList.remove('logging-out');
+            }
+        }, 600); // Matcher animasjonens varighet
+    }
+
+    // Funksjon for å vise logout-notifikasjon
+    function showLogoutNotification() {
+        // Fjern eksisterende notifikasjon hvis den finnes
+        const existingNotification = document.querySelector('.logout-notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+
+        // Lag ny logout-notifikasjon
+        const notification = document.createElement('div');
+        notification.className = 'logout-notification';
+        notification.innerHTML = `
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Du er nå logget ut</span>
+        `;
+
+        document.body.appendChild(notification);
+
+        // Vis notifikasjonen
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 100);
+
+        // Skjul og fjern notifikasjonen etter 2.5 sekunder
+        setTimeout(() => {
+            notification.classList.add('hide');
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 500);
+        }, 2500);
     }
 
     // Debug logg
