@@ -59,6 +59,32 @@
         </div>
     </div>
 
+    <!-- Login Required Modal -->
+    <div id="login-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-lock"></i> Pålogging kreves</h3>
+            </div>
+            <div class="modal-body">
+                <p>For å fullføre bestillingen må du være logget inn. Du kan enten:</p>
+                <ul class="login-options">
+                    <li><i class="fas fa-sign-in-alt"></i> Logge inn med din eksisterende konto</li>
+                    <li><i class="fas fa-user-plus"></i> Opprette en ny konto hvis du ikke har en</li>
+                    <li><i class="fas fa-shopping-cart"></i> Fortsette å handle og logge inn senere</li>
+                </ul>
+            </div>
+            <div class="modal-actions">
+                <button id="go-to-login" class="primary-button">
+                    <i class="fas fa-sign-in-alt"></i> Gå til pålogging
+                </button>
+                <button id="stay-in-cart" class="secondary-button">
+                    <i class="fas fa-shopping-cart"></i> Fortsett å handle
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="modal-backdrop" class="modal-backdrop" style="display: none;"></div>
+
     <button id="back-to-top" title="Tilbake til toppen">↑</button>
 
     <footer class="site-footer">

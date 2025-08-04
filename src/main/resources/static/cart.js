@@ -185,8 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Check if user is logged in
         const token = localStorage.getItem('token');
         if (!token) {
-            alert('Du må være logget inn for å fullføre bestillingen');
-            window.location.href = 'login.html';
+            showLoginModal();
             return;
         }
 
@@ -266,20 +265,55 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error('Checkout error:', error);
 
                 if (error.message.includes('User not found') || error.message.includes('magnus.lower@gmail.com')) {
-                    alert('Din bruker-sesjon er utløpt. Du blir omdirigert til pålogging.');
                     localStorage.removeItem('token');
                     localStorage.removeItem('user');
-                    window.location.href = 'login.html';
+                    showLoginModal();
                 } else if (error.message.includes('logget inn') || error.message.includes('tilgang')) {
-                    alert('Du må være logget inn for å bestille');
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('user');
-                    window.location.href = 'login.html';
+                    showLoginModal();
                 } else {
                     alert(error.message || 'Det oppstod en feil under bestillingen. Prøv igjen.');
                 }
             });
     });
+
+    // Login Modal Functions
+    function showLoginModal() {
+        const modal = document.getElementById('login-modal');
+        const backdrop = document.getElementById('modal-backdrop');
+        
+        modal.style.display = 'block';
+        backdrop.style.display = 'block';
+        
+        // Add event listeners for modal actions
+        document.getElementById('go-to-login').onclick = () => {
+            hideLoginModal();
+            window.location.href = 'login.html';
+        };
+        
+        document.getElementById('stay-in-cart').onclick = () => {
+            hideLoginModal();
+        };
+        
+        // Close modal when clicking backdrop
+        backdrop.onclick = () => {
+            hideLoginModal();
+        };
+        
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                hideLoginModal();
+            }
+        });
+    }
+    
+    function hideLoginModal() {
+        const modal = document.getElementById('login-modal');
+        const backdrop = document.getElementById('modal-backdrop');
+        
+        modal.style.display = 'none';
+        backdrop.style.display = 'none';
+    }
 
     // Create confirmation.js file if it doesn't exist yet
     function createConfirmationJS() {
