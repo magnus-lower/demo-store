@@ -132,20 +132,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function displayProducts(products) {
         const productList = document.getElementById("product-list");
-        productList.innerHTML = '';
-        products.forEach(product => {
-            const productElement = document.createElement("div");
-            productElement.className = "product";
-            productElement.dataset.id = product.id;
-            productElement.innerHTML = `
-                <h3>${product.name}</h3>
-                <img src="${product.imageUrl}" alt="${product.name}" style="width:100%; height:auto;">
-                <p>${product.description}</p>
-                <p><strong>kr ${product.price}</strong></p>
-                <button onclick="addToCart(${product.id})">Legg i handlekurv</button>
-            `;
-            productList.appendChild(productElement);
+        
+        // Smooth transition for filtering
+        productList.classList.add('filtering');
+        
+        // Fade out existing products
+        const existingProducts = productList.querySelectorAll('.product');
+        existingProducts.forEach(product => {
+            product.classList.add('fade-out');
         });
+        
+        // Wait for fade out animation before showing new products
+        setTimeout(() => {
+            productList.innerHTML = '';
+            products.forEach((product, index) => {
+                const productElement = document.createElement("div");
+                productElement.className = "product fade-in";
+                productElement.dataset.id = product.id;
+                productElement.style.animationDelay = `${index * 0.1}s`;
+                productElement.innerHTML = `
+                    <h3>${product.name}</h3>
+                    <img src="${product.imageUrl}" alt="${product.name}" style="width:100%; height:auto;">
+                    <p>${product.description}</p>
+                    <p><strong>kr ${product.price}</strong></p>
+                    <button onclick="addToCart(${product.id})">Legg i handlekurv</button>
+                `;
+                productList.appendChild(productElement);
+            });
+            
+            // Remove filtering class and fade-in class after animation
+            productList.classList.remove('filtering');
+            setTimeout(() => {
+                products.forEach((_, index) => {
+                    const productElement = productList.children[index];
+                    if (productElement) {
+                        productElement.classList.remove('fade-in');
+                    }
+                });
+            }, 500 + (products.length * 100));
+        }, existingProducts.length > 0 ? 300 : 0);
     }
 
     window.filterProducts = (category = 'Alle') => {
@@ -165,9 +190,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         displayProducts(filteredProducts);
 
-        // Skjul kategorilisten etter at man har valgt en kategori (på mobil)
-        if (window.innerWidth <= 768) {
-            categoryList.style.display = 'none';
+        // Skjul kategorilisten etter at man har valgt en kategori med smooth transition
+        if (categoryList.classList.contains('show')) {
+            categoryList.classList.remove('show');
+            setTimeout(() => {
+                if (!categoryList.classList.contains('show')) {
+                    categoryList.style.display = 'none';
+                }
+            }, 400);
         }
     };
 
@@ -201,14 +231,31 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     };
 
-    // Forbedret toggleCategories funksjon som fungerer på både desktop og mobil
+    // Forbedret toggleCategories funksjon med smooth animasjoner
     window.toggleCategories = () => {
-        const currentDisplay = window.getComputedStyle(categoryList).display;
-
-        if (currentDisplay === 'none') {
-            categoryList.style.display = 'flex';
+        const dropdownButton = document.querySelector('.dropdown-button');
+        const isShowing = categoryList.classList.contains('show');
+        
+        if (isShowing) {
+            // Skjul kategorilisten med animasjon
+            categoryList.classList.remove('show');
+            dropdownButton.classList.remove('active');
+            
+            // Vent til animasjonen er ferdig før vi setter display: none
+            setTimeout(() => {
+                if (!categoryList.classList.contains('show')) {
+                    categoryList.style.display = 'none';
+                }
+            }, 400);
         } else {
-            categoryList.style.display = 'none';
+            // Vis kategorilisten med animasjon
+            categoryList.style.display = 'flex';
+            dropdownButton.classList.add('active');
+            
+            // Trigger animasjonen med et lite delay
+            setTimeout(() => {
+                categoryList.classList.add('show');
+            }, 10);
         }
     };
 
