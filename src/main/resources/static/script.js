@@ -121,17 +121,37 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Hent produkter fra backend
+    console.log("Fetching products from /api/products...");
     fetch("/api/products")
-        .then(response => response.json())
+        .then(response => {
+            console.log("Response status:", response.status);
+            console.log("Response headers:", response.headers);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(products => {
+            console.log("Products received:", products);
+            console.log("Number of products:", products.length);
             allProducts = products;
             displayProducts(products);
             updateCartCount();
         })
-        .catch(error => console.error("Error fetching products:", error));
+        .catch(error => {
+            console.error("Error fetching products:", error);
+            console.error("Error details:", error.message);
+        });
 
     function displayProducts(products) {
+        console.log("displayProducts called with:", products);
         const productList = document.getElementById("product-list");
+        console.log("Product list element:", productList);
+        
+        if (!productList) {
+            console.error("Element with id 'product-list' not found!");
+            return;
+        }
         
         // Smooth transition for filtering
         productList.classList.add('filtering');

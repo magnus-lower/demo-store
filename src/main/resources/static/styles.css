@@ -42,7 +42,7 @@ body {
     z-index: 1000;
     border-radius: 4px;
     right: 0;
-    top: 120%; /* Flyttet ned fra 100% til 120% for mer avstand */
+    top: 170%; /* Satt til 170% som ønsket */
 }
 
 /* Show dropdown when it has 'show' class */
@@ -1083,6 +1083,12 @@ button:hover {
         gap: 10px;
     }
 
+    /* Dropdown positioning on mobile */
+    .dropdown-content {
+        top: 280%; /* Move dropdown even further down on mobile */
+        min-width: 180px;
+    }
+
     .header-controls {
         order: 3;
         width: 100%;
@@ -1103,6 +1109,12 @@ button:hover {
 
     .header-actions {
         top: 65px; /* Adjusted for smaller screens */
+    }
+
+    /* Dropdown positioning on smaller mobile screens */
+    .dropdown-content {
+        top: 280%; /* Move dropdown even further down on smaller screens */
+        min-width: 160px;
     }
 }
 
