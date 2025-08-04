@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // DOM elementer
     const userIcon = document.getElementById('user-icon');
     const cartIcon = document.getElementById('cart-icon');
-    const userDropdownBtn = document.getElementById('user-dropdown-btn');
     const ordersModal = document.getElementById('orders-modal');
     const closeOrdersModal = document.getElementById('close-orders-modal');
 
@@ -21,19 +20,17 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateUserInterface() {
         const token = localStorage.getItem('token');
         const user = JSON.parse(localStorage.getItem('user') || '{}');
-        const notLoggedIn = document.getElementById('not-logged-in');
-        const loggedIn = document.getElementById('logged-in');
-        const userGreeting = document.getElementById('user-greeting');
+        const userDropdownContent = document.getElementById('user-dropdown-content');
 
         if (token && user.firstName) {
             // Bruker er logget inn
-            notLoggedIn.style.display = 'none';
-            loggedIn.style.display = 'block';
-            userGreeting.textContent = `Hei, ${user.firstName}`;
+            userIcon.classList.add('logged-in');
+            // Ikke sett display direkte - la CSS og show klassen håndtere det
         } else {
             // Bruker er ikke logget inn
-            notLoggedIn.style.display = 'block';
-            loggedIn.style.display = 'none';
+            userIcon.classList.remove('logged-in');
+            // Sørg for at dropdown er skjult når ikke logget inn
+            userDropdownContent.classList.remove('show');
         }
     }
 
@@ -41,25 +38,29 @@ document.addEventListener("DOMContentLoaded", () => {
     if (userIcon) {
         userIcon.addEventListener('click', (e) => {
             e.preventDefault();
-            // Gå til innloggingsside
-            window.location.href = 'auth.html';
-        });
-    }
-
-    // Event handler for user dropdown
-    if (userDropdownBtn) {
-        userDropdownBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const dropdownContent = document.getElementById('user-dropdown-content');
-            dropdownContent.classList.toggle('show');
+            const token = localStorage.getItem('token');
+            
+            if (token) {
+                // Bruker er logget inn - toggle dropdown
+                e.stopPropagation();
+                const dropdownContent = document.getElementById('user-dropdown-content');
+                const isVisible = dropdownContent.classList.contains('show');
+                dropdownContent.classList.toggle('show', !isVisible);
+            } else {
+                // Bruker er ikke logget inn - gå til innloggingsside
+                window.location.href = 'auth.html';
+            }
         });
     }
 
     // Lukk dropdown når man klikker utenfor
     document.addEventListener('click', (e) => {
         const dropdownContent = document.getElementById('user-dropdown-content');
-        if (dropdownContent && !e.target.closest('.user-dropdown')) {
+        const userDropdown = e.target.closest('.user-dropdown');
+        const userWrapper = e.target.closest('.user-wrapper');
+        
+        // Lukk dropdown hvis klikket ikke var innenfor user-dropdown området
+        if (dropdownContent && !userDropdown && !userWrapper) {
             dropdownContent.classList.remove('show');
         }
     });
@@ -69,6 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (viewOrdersBtn) {
         viewOrdersBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            // Lukk dropdown først
+            const dropdownContent = document.getElementById('user-dropdown-content');
+            dropdownContent.classList.remove('show');
             showOrdersModal();
         });
     }
@@ -87,6 +91,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            // Lukk dropdown først
+            const dropdownContent = document.getElementById('user-dropdown-content');
+            dropdownContent.classList.remove('show');
             logout();
         });
     }

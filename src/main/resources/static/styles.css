@@ -42,7 +42,7 @@ body {
     z-index: 1000;
     border-radius: 4px;
     right: 0;
-    top: 100%;
+    top: 120%; /* Flyttet ned fra 100% til 120% for mer avstand */
 }
 
 /* Show dropdown when it has 'show' class */
@@ -684,6 +684,18 @@ button:hover {
     z-index: 101;
     pointer-events: auto;
     position: relative;
+}
+
+/* Logged in user icon styling */
+.user-icon.logged-in {
+    background-color: #4CAF50;
+    color: white;
+    box-shadow: 0 0 0 2px #45a049;
+}
+
+.user-icon.logged-in:hover {
+    background-color: #45a049;
+    box-shadow: 0 0 0 2px #388e3c;
 }
 
 .user-icon:hover {

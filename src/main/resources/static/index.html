@@ -23,29 +23,18 @@
         <div class="header-actions">
             <!-- Brukerikon/dropdown - forbedret -->
             <div class="user-wrapper">
-                <!-- Ikke logget inn -->
-                <div id="not-logged-in">
+                <div class="user-dropdown">
                     <a href="#" class="user-icon" id="user-icon">
                         <i class="fas fa-user"></i>
                     </a>
-                </div>
-
-                <!-- Logget inn -->
-                <div id="logged-in" style="display: none;">
-                    <div class="user-dropdown">
-                        <button class="user-dropdown-button" id="user-dropdown-btn">
-                            <span id="user-greeting">Hei</span>
-                            <i class="dropdown-icon fas fa-chevron-down"></i>
-                        </button>
-                        <div class="dropdown-content" id="user-dropdown-content">
-                            <a href="#" id="view-orders">
-                                <i class="fas fa-shopping-bag"></i> Mine bestillinger
-                            </a>
-                            <hr>
-                            <a href="#" id="logout-button">
-                                <i class="fas fa-sign-out-alt"></i> Logg ut
-                            </a>
-                        </div>
+                    <div class="dropdown-content" id="user-dropdown-content">
+                        <a href="#" id="view-orders">
+                            <i class="fas fa-shopping-bag"></i> Mine bestillinger
+                        </a>
+                        <hr>
+                        <a href="#" id="logout-button">
+                            <i class="fas fa-sign-out-alt"></i> Logg ut
+                        </a>
                     </div>
                 </div>
             </div>
