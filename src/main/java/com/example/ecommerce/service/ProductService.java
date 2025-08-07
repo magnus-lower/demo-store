@@ -1,14 +1,16 @@
 package com.example.ecommerce.service;
 
+import java.math.BigDecimal;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.example.ecommerce.model.Product;
 import com.example.ecommerce.repository.ProductRepository;
+
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.math.BigDecimal;
 
 @Slf4j
 @Service
