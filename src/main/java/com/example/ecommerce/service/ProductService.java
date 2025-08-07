@@ -4,11 +4,13 @@ import com.example.ecommerce.model.Product;
 import com.example.ecommerce.repository.ProductRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.math.BigDecimal;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -19,7 +21,7 @@ public class ProductService {
     public void initializeProducts() {
         // Sjekk om produkter allerede finnes
         if (productRepository.count() == 0) {
-            System.out.println("Initializing products in database...");
+            log.info("Initializing products in database...");
 
             // EKSISTERENDE PRODUKTER
             Product flaske = new Product();
@@ -168,15 +170,15 @@ public class ProductService {
             productRepository.save(bokhylle);
             productRepository.save(skrivebordsstol);
 
-            System.out.println("Successfully initialized 15 products in database");
+            log.info("Successfully initialized {} products in database", productRepository.count());
         } else {
-            System.out.println("Products already exist in database. Total count: " + productRepository.count());
+            log.debug("Products already exist in database. Total count: {}", productRepository.count());
         }
     }
 
     public List<Product> getProducts() {
         List<Product> products = productRepository.findAll();
-        System.out.println("Found " + products.size() + " products in database");
+        log.debug("Found {} products in database", products.size());
         return products;
     }
 }
