@@ -1,13 +1,15 @@
 package com.example.ecommerce.infrastructure.bootstrap;
 
+import java.math.BigDecimal;
+
+import org.springframework.stereotype.Component;
+
 import com.example.ecommerce.domain.model.Product;
 import com.example.ecommerce.domain.repository.ProductRepository;
+
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
 
 @Slf4j
 @Component
@@ -41,7 +43,7 @@ public class ProductDataInitializer {
             potteplante.setName("Potteplante");
             potteplante.setDescription("En potteplante som passer til alle typer planter");
             potteplante.setPrice(new BigDecimal("15.99"));
-            potteplante.setImageUrl("/images/Plant pot.jpg");
+            potteplante.setImageUrl("/images/plant-pot.jpg");
             potteplante.setCategory("Møbler");
             potteplante.setStockQuantity(8);
 
@@ -137,7 +139,7 @@ public class ProductDataInitializer {
             skrivebordsstol.setName("Skrivebordsstol");
             skrivebordsstol.setDescription("Ergonomisk skrivebordsstol som gir god støtte under lange arbeidsøkter");
             skrivebordsstol.setPrice(new BigDecimal("79.99"));
-            skrivebordsstol.setImageUrl("/images/desk chair.jpg");
+            skrivebordsstol.setImageUrl("/images/desk-chair.jpg");
             skrivebordsstol.setCategory("Møbler");
             skrivebordsstol.setStockQuantity(6);
 
