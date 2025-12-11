@@ -1,4 +1,4 @@
-package com.example.ecommerce.infrastructure.security;
+package com.example.ecommerce.infrastructure.config;
 
 import com.example.ecommerce.infrastructure.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
