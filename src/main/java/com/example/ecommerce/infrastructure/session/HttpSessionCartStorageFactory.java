@@ -1,6 +1,6 @@
 package com.example.ecommerce.infrastructure.session;
 
-import com.example.ecommerce.application.session.CartStorage;
+import com.example.ecommerce.application.session.CartStoragePort;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
 
@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 public class HttpSessionCartStorageFactory implements CartStorageFactory {
 
     @Override
-    public CartStorage forSession(HttpSession session) {
+    public CartStoragePort forSession(HttpSession session) {
         return new HttpSessionCartStorage(session);
     }
 
-    private static class HttpSessionCartStorage implements CartStorage {
+    private static class HttpSessionCartStorage implements CartStoragePort {
         private static final String CART_SESSION_KEY = "cart";
         private final HttpSession session;
 

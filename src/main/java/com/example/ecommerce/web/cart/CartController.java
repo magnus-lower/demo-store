@@ -1,7 +1,7 @@
 package com.example.ecommerce.web.cart;
 
 import com.example.ecommerce.application.service.CartService;
-import com.example.ecommerce.application.session.CartStorage;
+import com.example.ecommerce.application.session.CartStoragePort;
 import com.example.ecommerce.infrastructure.session.CartStorageFactory;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -36,12 +36,12 @@ public class CartController {
 
     @PostMapping("/clear")
     public List<Map<String, Object>> clearCart(HttpSession session) {
-        CartStorage cartStorage = resolveCartStorage(session);
+        CartStoragePort cartStorage = resolveCartStorage(session);
         cartService.clearCart(cartStorage);
         return cartService.getCart(cartStorage);
     }
 
-    private CartStorage resolveCartStorage(HttpSession session) {
+    private CartStoragePort resolveCartStorage(HttpSession session) {
         return cartStorageFactory.forSession(session);
     }
 }

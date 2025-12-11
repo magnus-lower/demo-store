@@ -1,11 +1,10 @@
 package com.example.ecommerce.application.service;
 
-import com.example.ecommerce.application.session.CartStorage;
+import com.example.ecommerce.application.session.CartStoragePort;
 import com.example.ecommerce.domain.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,11 +15,11 @@ import java.util.Map;
 public class CartService {
     private final ProductService productService;
 
-    public List<Map<String, Object>> getCart(CartStorage cartStorage) {
+    public List<Map<String, Object>> getCart(CartStoragePort cartStorage) {
         return cartStorage.readCart();
     }
 
-    public List<Map<String, Object>> addToCart(Long productId, Integer quantity, CartStorage cartStorage) {
+    public List<Map<String, Object>> addToCart(Long productId, Integer quantity, CartStoragePort cartStorage) {
         List<Map<String, Object>> cart = getCart(cartStorage);
 
         Product product = productService.getProducts().stream()
@@ -56,7 +55,7 @@ public class CartService {
         return cart;
     }
 
-    public List<Map<String, Object>> removeFromCart(Long productId, CartStorage cartStorage) {
+    public List<Map<String, Object>> removeFromCart(Long productId, CartStoragePort cartStorage) {
         List<Map<String, Object>> cart = getCart(cartStorage);
         cart.removeIf(item -> {
             Long itemId = Long.valueOf(item.get("id").toString());
@@ -66,12 +65,12 @@ public class CartService {
         return cart;
     }
 
-    public List<Map<String, Object>> clearCart(CartStorage cartStorage) {
+    public List<Map<String, Object>> clearCart(CartStoragePort cartStorage) {
         cartStorage.clearCart();
         return new ArrayList<>();
     }
 
-    public List<Map<String, Object>> updateCartItemQuantity(Long productId, Integer quantity, CartStorage cartStorage) {
+    public List<Map<String, Object>> updateCartItemQuantity(Long productId, Integer quantity, CartStoragePort cartStorage) {
         List<Map<String, Object>> cart = getCart(cartStorage);
 
         for (Map<String, Object> item : cart) {
