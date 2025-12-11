@@ -4,17 +4,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let allProducts = [];
 
-    // DOM elementer
+
     const userIcon = document.getElementById('user-icon');
     const cartIcon = document.getElementById('cart-icon');
     const ordersModal = document.getElementById('orders-modal');
     const closeOrdersModal = document.getElementById('close-orders-modal');
 
-    // Hent login-status fra localStorage
+
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-    // Oppdater brukergrensesnitt basert på login-status
+
     updateUserInterface();
 
     function updateUserInterface() {
@@ -23,61 +23,61 @@ document.addEventListener("DOMContentLoaded", () => {
         const userDropdownContent = document.getElementById('user-dropdown-content');
 
         if (token && user.firstName) {
-            // Bruker er logget inn
+
             userIcon.classList.add('logged-in');
-            // Ikke sett display direkte - la CSS og show klassen håndtere det
+
         } else {
-            // Bruker er ikke logget inn
+
             userIcon.classList.remove('logged-in');
-            // Sørg for at dropdown er skjult når ikke logget inn
+
             userDropdownContent.classList.remove('show');
         }
     }
 
-    // Event handlers for brukerikonet
+
     if (userIcon) {
         userIcon.addEventListener('click', (e) => {
             e.preventDefault();
             const token = localStorage.getItem('token');
-            
+
             if (token) {
-                // Bruker er logget inn - toggle dropdown
+
                 e.stopPropagation();
                 const dropdownContent = document.getElementById('user-dropdown-content');
                 const isVisible = dropdownContent.classList.contains('show');
                 dropdownContent.classList.toggle('show', !isVisible);
             } else {
-                // Bruker er ikke logget inn - gå til innloggingsside
+
                 window.location.href = '/html/auth/auth.html';
             }
         });
     }
 
-    // Lukk dropdown når man klikker utenfor
+
     document.addEventListener('click', (e) => {
         const dropdownContent = document.getElementById('user-dropdown-content');
         const userDropdown = e.target.closest('.user-dropdown');
         const userWrapper = e.target.closest('.user-wrapper');
-        
-        // Lukk dropdown hvis klikket ikke var innenfor user-dropdown området
+
+
         if (dropdownContent && !userDropdown && !userWrapper) {
             dropdownContent.classList.remove('show');
         }
     });
 
-    // Mine bestillinger klikk-handler
+
     const viewOrdersBtn = document.getElementById('view-orders');
     if (viewOrdersBtn) {
         viewOrdersBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            // Lukk dropdown først
+
             const dropdownContent = document.getElementById('user-dropdown-content');
             dropdownContent.classList.remove('show');
             showOrdersModal();
         });
     }
 
-    // Min profil klikk-handler
+
     const viewProfileBtn = document.getElementById('view-profile');
     if (viewProfileBtn) {
         viewProfileBtn.addEventListener('click', (e) => {
@@ -86,33 +86,33 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Logg ut klikk-handler
+
     const logoutBtn = document.getElementById('logout-button');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            // Lukk dropdown først
+
             const dropdownContent = document.getElementById('user-dropdown-content');
             dropdownContent.classList.remove('show');
             logout();
         });
     }
 
-    // Modal event handlers
+
     if (closeOrdersModal) {
         closeOrdersModal.addEventListener('click', () => {
             ordersModal.style.display = 'none';
         });
     }
 
-    // Lukk modal når man klikker utenfor
+
     window.addEventListener('click', (e) => {
         if (e.target === ordersModal) {
             ordersModal.style.display = 'none';
         }
     });
 
-    // Handle cart icon click
+
     if (cartIcon) {
         cartIcon.addEventListener('click', (e) => {
             e.preventDefault();
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Hent produkter fra backend
+
     console.log("Fetching products from /api/products...");
     fetch("/api/products")
         .then(response => {
@@ -147,22 +147,22 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("displayProducts called with:", products);
         const productList = document.getElementById("product-list");
         console.log("Product list element:", productList);
-        
+
         if (!productList) {
             console.error("Element with id 'product-list' not found!");
             return;
         }
-        
-        // Smooth transition for filtering
+
+
         productList.classList.add('filtering');
-        
-        // Fade out existing products
+
+
         const existingProducts = productList.querySelectorAll('.product');
         existingProducts.forEach(product => {
             product.classList.add('fade-out');
         });
-        
-        // Wait for fade out animation before showing new products
+
+
         setTimeout(() => {
             productList.innerHTML = '';
             products.forEach((product, index) => {
@@ -179,8 +179,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
                 productList.appendChild(productElement);
             });
-            
-            // Remove filtering class and fade-in class after animation
+
+
             productList.classList.remove('filtering');
             setTimeout(() => {
                 products.forEach((_, index) => {
@@ -210,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         displayProducts(filteredProducts);
 
-        // Skjul kategorilisten etter at man har valgt en kategori med smooth transition
+
         if (categoryList.classList.contains('show')) {
             categoryList.classList.remove('show');
             setTimeout(() => {
@@ -251,49 +251,49 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     };
 
-    // Forbedret toggleCategories funksjon med smooth animasjoner
+
     window.toggleCategories = () => {
         const dropdownButton = document.querySelector('.dropdown-button');
         const isShowing = categoryList.classList.contains('show');
-        
+
         if (isShowing) {
-            // Skjul kategorilisten med animasjon
+
             categoryList.classList.remove('show');
             dropdownButton.classList.remove('active');
-            
-            // Vent til animasjonen er ferdig før vi setter display: none
+
+
             setTimeout(() => {
                 if (!categoryList.classList.contains('show')) {
                     categoryList.style.display = 'none';
                 }
             }, 400);
         } else {
-            // Vis kategorilisten med animasjon
+
             categoryList.style.display = 'flex';
             dropdownButton.classList.add('active');
-            
-            // Trigger animasjonen med et lite delay
+
+
             setTimeout(() => {
                 categoryList.classList.add('show');
             }, 10);
         }
     };
 
-    // Lukk kategorilisten når man klikker utenfor (kun på mobil)
+
     document.addEventListener('click', (e) => {
         const dropdownButton = document.querySelector('.dropdown-button');
         const categoryListElement = document.getElementById('category-list');
 
-        // Sjekk om vi er på mobil og om kategorilisten er synlig
+
         if (window.innerWidth <= 768 && categoryListElement.style.display === 'flex') {
-            // Hvis klikket ikke var på dropdown-knappen eller inne i kategorilisten
+
             if (!dropdownButton.contains(e.target) && !categoryListElement.contains(e.target)) {
                 categoryListElement.style.display = 'none';
             }
         }
     });
 
-    // Søke-input
+
     const searchBox = document.getElementById("search-box");
     if (searchBox) {
         searchBox.addEventListener("input", () => {
@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Funksjon for å vise bestillinger modal
+
     function showOrdersModal() {
         if (!token) {
             alert('Du må være logget inn for å se bestillinger');
@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loadUserOrders();
     }
 
-    // Funksjon for å laste brukerens bestillinger
+
     function loadUserOrders() {
         const ordersList = document.getElementById('orders-list');
         ordersList.innerHTML = '<p>Laster bestillinger...</p>';
@@ -339,7 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     }
 
-    // Funksjon for å vise bestillinger
+
     function displayOrders(orders) {
         const ordersList = document.getElementById('orders-list');
 
@@ -369,7 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ordersList.innerHTML = ordersHtml;
     }
 
-    // Hjelpefunksjon for å oversette status
+
     function getStatusText(status) {
         const statusMap = {
             'PENDING': 'Venter',
@@ -381,54 +381,54 @@ document.addEventListener("DOMContentLoaded", () => {
         return statusMap[status] || status;
     }
 
-    // Logg ut funksjon
+
     function logout() {
-        // Lukk dropdown først med smooth animasjon
+
         const dropdownContent = document.getElementById('user-dropdown-content');
         if (dropdownContent) {
             dropdownContent.classList.remove('show');
         }
 
-        // Legg til logout animasjon på bruker-ikon
+
         const userIcon = document.querySelector('.user-icon');
         if (userIcon) {
             userIcon.classList.add('logging-out');
         }
 
-        // Vis logout-notifikasjon
+
         showLogoutNotification();
 
-        // Vent litt før vi gjør faktiske endringer for smooth animasjon
+
         setTimeout(() => {
-            // Fjern token og brukerdata fra localStorage
+
             localStorage.removeItem('token');
             localStorage.removeItem('user');
 
-            // Oppdater brukergrensesnitt
+
             updateUserInterface();
 
-            // Tøm handlekurv
+
             fetch('/api/cart/clear', { method: 'POST' }).catch(() => {});
 
-            // Oppdater handlekurv-teller
+
             updateCartCount();
 
-            // Fjern logout-animasjon
+
             if (userIcon) {
                 userIcon.classList.remove('logging-out');
             }
-        }, 600); // Matcher animasjonens varighet
+        }, 600);
     }
 
-    // Funksjon for å vise logout-notifikasjon
+
     function showLogoutNotification() {
-        // Fjern eksisterende notifikasjon hvis den finnes
+
         const existingNotification = document.querySelector('.logout-notification');
         if (existingNotification) {
             existingNotification.remove();
         }
 
-        // Lag ny logout-notifikasjon
+
         const notification = document.createElement('div');
         notification.className = 'logout-notification';
         notification.innerHTML = `
@@ -438,12 +438,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.body.appendChild(notification);
 
-        // Vis notifikasjonen
+
         setTimeout(() => {
             notification.classList.add('show');
         }, 100);
 
-        // Skjul og fjern notifikasjonen etter 2.5 sekunder
+
         setTimeout(() => {
             notification.classList.add('hide');
             setTimeout(() => {
@@ -454,6 +454,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 2500);
     }
 
-    // Debug logg
+
     console.log("Script loaded successfully");
 });

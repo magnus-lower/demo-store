@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Get purchased items from localStorage (for display)
+
     const purchasedItems = JSON.parse(localStorage.getItem("purchasedItems") || "[]");
     const orderDetails = JSON.parse(localStorage.getItem("orderDetails") || "{}");
     const purchasedItemsContainer = document.getElementById("purchased-items");
 
-    // Display order number and date if available
+
     if (orderDetails.orderNumber) {
         const confirmationContainer = document.querySelector('.confirmation-container h1');
         if (confirmationContainer) {
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Display purchased items
+
     if (purchasedItems.length === 0) {
         purchasedItemsContainer.innerHTML = "<p>Ingen varer funnet.</p>";
     } else {
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         purchasedItemsContainer.innerHTML = itemsHtml;
 
-        // Add shipping and calculate total
+
         const shipping = 49.00;
         const finalTotal = orderDetails.totalAmount || (totalAmount + shipping);
 
@@ -64,17 +64,17 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     }
 
-    // Back to store button
+
     document.getElementById("back-to-store-button").addEventListener("click", () => {
-        // Clear localStorage and redirect to store
+
         localStorage.removeItem("purchasedItems");
         localStorage.removeItem("orderDetails");
         window.location.href = "/html/product/index.html";
     });
 
-    // Optional: Clear localStorage after a delay to prevent browser back button issues
+
     setTimeout(() => {
         localStorage.removeItem("purchasedItems");
         localStorage.removeItem("orderDetails");
-    }, 30000); // Clear after 30 seconds
+    }, 30000);
 });

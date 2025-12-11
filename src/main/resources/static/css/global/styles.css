@@ -1,11 +1,11 @@
-/* Set the basic font style, padding, and background color for the body */
+
 body {
     font-family: Arial, sans-serif;
     padding: 20px;
     background-color: #f5f5f5;
 }
 
-/* Styling for the search input field, including padding for the search icon */
+
 .search-input {
     border: 1px solid #ddd;
     border-radius: 20px;
@@ -19,12 +19,12 @@ body {
     position: relative;
 }
 
-/* Placeholder text color for the search input field */
+
 .search-input::placeholder {
     color: #aaa;
 }
 
-/* Style for the main navigation button below the search bar */
+
 .main-nav {
     display: flex;
     justify-content: flex-start;
@@ -32,7 +32,7 @@ body {
     margin: 0 auto;
 }
 
-/* Dropdown content styling, initially hidden and displayed on hover */
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -42,15 +42,15 @@ body {
     z-index: 1000;
     border-radius: 4px;
     right: 0;
-    top: 170%; /* Satt til 170% som ønsket */
+    top: 170%;
 }
 
-/* Show dropdown when it has 'show' class */
+
 .dropdown-content.show {
     display: block;
 }
 
-/* Styling for individual links within the dropdown content */
+
 .dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -59,7 +59,7 @@ body {
     transition: background-color 0.3s;
 }
 
-/* Hover effect for dropdown content links */
+
 .dropdown-content a:hover {
     background-color: #ddd;
 }
@@ -70,16 +70,16 @@ body {
     border-top: 1px solid #ddd;
 }
 
-/* Show dropdown content when hovering over the dropdown container */
+
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
-/* Styling for the product list container, with flexible layout and added spacing */
+
 #product-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 30px; /* Adds space between product cards */
+    gap: 30px;
     justify-content: center;
     margin-top: 20px;
     transition: opacity 0.3s ease;
@@ -89,7 +89,7 @@ body {
     opacity: 0.7;
 }
 
-/* Product animation classes */
+
 .product {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -114,40 +114,40 @@ body {
     }
 }
 
-/* Ensure product images are responsive within their container with added margin */
+
 .product img {
     width: 100%;
     height: auto;
-    margin-bottom: 15px; /* Adds space between the image and product details */
+    margin-bottom: 15px;
 }
 
-/* Margin and color styling for product titles */
+
 .product h3 {
-    margin: 15px 0; /* Adds space between the title and other elements */
+    margin: 15px 0;
 }
 
-/* Color styling for product descriptions */
+
 .product p {
     color: #555;
-    margin-bottom: 15px; /* Adds space between description and price */
+    margin-bottom: 15px;
 }
 
-/* General button styling, with hover effects */
+
 button {
-    padding: 10px 20px; /* Adjusted padding for buttons */
-    margin: 10px 5px; /* Adds space between buttons */
+    padding: 10px 20px;
+    margin: 10px 5px;
     background-color: #f44336;
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 5px; /* Optional: rounded corners for buttons */
+    border-radius: 5px;
 }
 
 button:hover {
     background-color: #d32f2f;
 }
 
-/* Position the "view-cart" button at the top-right of the page */
+
 #view-cart {
     background-color: #2196F3;
     position: absolute;
@@ -161,18 +161,18 @@ button:hover {
     border-radius: 5px;
 }
 
-/* "Hover-effect" for the "View-cart" button */
+
 #view-cart:hover {
     background-color: #1976D2;
 }
 
-/* Styling for the cart items list, removing default list styling */
+
 #cart-items {
     list-style-type: none;
     padding: 0;
 }
 
-/* Cart item styling */
+
 #cart-items li {
     display: flex;
     align-items: center;
@@ -183,19 +183,19 @@ button:hover {
     gap: 10px;
 }
 
-/* Ensure cart item images are spaced properly from text */
+
 #cart-items li img {
     margin-right: 10px;
 }
 
-/* Spacing for buttons and spans within cart items */
+
 #cart-items li button,
 #cart-items li span {
     margin-left: 5px;
     margin-right: 5px;
 }
 
-/* Styles for category list and category items */
+
 .category-list {
     display: flex;
     gap: 20px;
@@ -278,7 +278,7 @@ button:hover {
     transition: all 0.1s ease;
 }
 
-/* Oppdatert styling for cart notification */
+
 .cart-notification {
     position: fixed;
     top: -100px;
@@ -304,7 +304,7 @@ button:hover {
     top: 200px;
 }
 
-/* Logout notification styling */
+
 .logout-notification {
     position: fixed;
     top: -100px;
@@ -337,7 +337,7 @@ button:hover {
     transform: translateX(100px);
 }
 
-/* Cart page styling */
+
 .cart-container {
     max-width: 1000px;
     margin: 40px auto;
@@ -577,7 +577,7 @@ button:hover {
     background-color: #45a049;
 }
 
-/* Styling for the back-to-store button */
+
 #back-to-store-empty {
     padding: 12px 24px;
     background-color: #d32f2f;
@@ -610,7 +610,7 @@ button:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Quantity controls styling */
+
 .increase, .decrease {
     width: 24px;
     height: 24px;
@@ -624,7 +624,7 @@ button:hover {
     padding: 15px 0;
 }
 
-/* Checkout confirmation page styles */
+
 .confirmation-container {
     max-width: 800px;
     margin: 50px auto;
@@ -685,7 +685,7 @@ button:hover {
     border-top: 1px solid #ddd;
 }
 
-/* User wrapper and profile container */
+
 .user-wrapper {
     position: relative;
 }
@@ -712,7 +712,7 @@ button:hover {
     pointer-events: auto;
 }
 
-/* User dropdown styling */
+
 .user-dropdown {
     position: relative;
 }
@@ -744,7 +744,7 @@ button:hover {
     transform: rotate(180deg);
 }
 
-/* Auth buttons */
+
 .auth-button {
     padding: 8px 16px;
     border-radius: 4px;
@@ -780,7 +780,7 @@ button:hover {
     min-width: 150px;
 }
 
-/* User icon and cart icon styling */
+
 .user-icon, .cart-icon {
     display: flex;
     align-items: center;
@@ -799,7 +799,7 @@ button:hover {
     position: relative;
 }
 
-/* Logged in user icon styling */
+
 .user-icon.logged-in {
     background-color: #4CAF50;
     color: white;
@@ -812,7 +812,7 @@ button:hover {
     box-shadow: 0 0 0 2px #388e3c;
 }
 
-/* Logout animation */
+
 .user-icon.logging-out {
     animation: logoutPulse 0.6s ease-in-out;
     background-color: #ff9800 !important;
@@ -881,7 +881,7 @@ button:hover {
     padding: 2px;
 }
 
-/* Modal styling */
+
 .modal {
     position: fixed;
     z-index: 1000;
@@ -934,7 +934,7 @@ button:hover {
     padding: 20px;
 }
 
-/* Login modal specific styles */
+
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -1016,7 +1016,7 @@ button:hover {
     transform: translateY(-1px);
 }
 
-/* Back to site button */
+
 .back-to-site-btn {
     display: inline-flex;
     align-items: center;
@@ -1048,7 +1048,7 @@ button:hover {
     flex-shrink: 0;
 }
 
-/* Mobile responsive adjustments */
+
 @media (max-width: 768px) {
     .header-content {
         flex-direction: column;
@@ -1078,14 +1078,14 @@ button:hover {
         order: 2;
         align-self: flex-end;
         position: absolute;
-        top: 70px; /* Moved down from 50px to accommodate back-to-site button */
+        top: 70px;
         right: 15px;
         gap: 10px;
     }
 
-    /* Dropdown positioning on mobile */
+
     .dropdown-content {
-        top: 280%; /* Move dropdown even further down on mobile */
+        top: 280%;
         min-width: 180px;
     }
 
@@ -1108,17 +1108,17 @@ button:hover {
     }
 
     .header-actions {
-        top: 65px; /* Adjusted for smaller screens */
+        top: 65px;
     }
 
-    /* Dropdown positioning on smaller mobile screens */
+
     .dropdown-content {
-        top: 280%; /* Move dropdown even further down on smaller screens */
+        top: 280%;
         min-width: 160px;
     }
 }
 
-/* Orders styling */
+
 .orders-container {
     max-height: 400px;
     overflow-y: auto;
@@ -1153,7 +1153,7 @@ button:hover {
     margin: 5px 0;
 }
 
-/* Update the search container */
+
 .search-container {
     display: flex;
     max-width: 400px;
@@ -1168,7 +1168,7 @@ button:hover {
     position: relative;
 }
 
-/* Header actions - positioned to the right */
+
 .header-actions {
     display: flex;
     gap: 15px;
@@ -1178,12 +1178,12 @@ button:hover {
     position: relative;
 }
 
-/* Base responsive styles */
+
 * {
     box-sizing: border-box;
 }
 
-/* Header styles */
+
 .site-header {
     background-color: white;
     padding: 15px 20px;
@@ -1268,7 +1268,7 @@ button:hover {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-/* Navigation */
+
 .main-nav {
     display: none;
 }
@@ -1281,7 +1281,7 @@ button:hover {
     cursor: pointer;
 }
 
-/* Product grid */
+
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -1326,7 +1326,7 @@ button:hover {
     transition: background-color 0.3s;
 }
 
-/* Back to top button */
+
 #back-to-top {
     position: fixed;
     bottom: 20px;
@@ -1346,7 +1346,7 @@ button:hover {
     z-index: 99;
 }
 
-/* Footer */
+
 .site-footer {
     background-color: #f0f0f0;
     padding: 20px;
@@ -1359,7 +1359,7 @@ button:hover {
     text-decoration: none;
 }
 
-/* Tablet og små skjermer (768px og mindre) */
+
 @media (max-width: 768px) {
     .header-content {
         flex-direction: column;
@@ -1531,7 +1531,7 @@ button:hover {
     }
 }
 
-/* Små mobile enheter (480px og mindre) */
+
 @media (max-width: 480px) {
     .header-content {
         padding: 8px;
@@ -1846,7 +1846,7 @@ button:hover {
     }
 }
 
-/* Ekstra små skjermer (360px og mindre) */
+
 @media (max-width: 360px) {
     .header-content {
         padding: 5px;

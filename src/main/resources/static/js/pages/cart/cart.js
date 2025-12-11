@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     let cart = [];
 
-    // Fetch cart from backend
+
     function loadCart() {
         fetch('/api/cart')
             .then(res => {
@@ -17,11 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .catch(err => {
                 console.error("Error loading cart:", err);
-                updateCartUI(); // Still update UI even if there's an error
+                updateCartUI();
             });
     }
 
-    // Update cart UI
+
     function updateCartUI() {
         const cartItems = document.getElementById("cart-items");
         const emptyCartMessage = document.getElementById("empty-cart-message");
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         cart.forEach((item, index) => {
             itemsCount += item.quantity;
-            // If price is an object (BigDecimal), use item.price.value or item.price, else just item.price
+
             let price = typeof item.price === "object" && item.price !== null
                 ? (item.price.value || item.price)
                 : item.price;
@@ -76,14 +76,14 @@ document.addEventListener("DOMContentLoaded", () => {
             cartItems.appendChild(cartItem);
         });
 
-        // Update order summary
+
         document.getElementById("items-count").textContent = itemsCount;
         document.getElementById("items-total").textContent = `kr ${itemsTotal.toFixed(2)}`;
         document.getElementById("final-total").textContent = `kr ${(itemsTotal + 49).toFixed(2)}`;
         updateCartTotal();
     }
 
-    // Update total price
+
     function updateCartTotal() {
         const cartTotalElement = document.getElementById("cart-total");
         const total = cart.reduce((sum, item) => {
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cartTotalElement.textContent = `Totalt: kr ${total.toFixed(2)}`;
     }
 
-    // Handle cart item button clicks
+
     document.getElementById("cart-items").addEventListener("click", (event) => {
         const target = event.target;
         const index = target.dataset.index;
@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // "Back to store" buttons
+
     document.getElementById("back-to-store").addEventListener("click", () => {
         window.location.href = "/html/product/index.html";
     });
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "/html/product/index.html";
     });
 
-    // "Clear cart" button
+
     document.getElementById("clear-cart").addEventListener("click", () => {
         fetch('/api/cart/clear', { method: 'POST' })
             .then(response => {
@@ -180,29 +180,29 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     });
 
-    // Updated checkout button functionality
+
     document.getElementById("checkout-button").addEventListener("click", () => {
-        // Check if user is logged in
+
         const token = localStorage.getItem('token');
         if (!token) {
             showLoginModal();
             return;
         }
 
-        // Check if cart has items
+
         if (cart.length === 0) {
             alert('Handlekurven er tom');
             return;
         }
 
-        // Prepare checkout data
+
         const items = {};
         cart.forEach(item => {
             items[item.id] = item.quantity;
         });
 
         const checkoutData = {
-            street: "Testgate 1", // Default address - in real app this would come from a form
+            street: "Testgate 1",
             city: "Oslo",
             zipCode: "0001",
             country: "Norge",
@@ -212,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log('Sending checkout data:', checkoutData);
         console.log('Using token:', token ? 'Token exists' : 'No token');
 
-        // Send checkout request to backend
+
         fetch('/api/checkout', {
             method: 'POST',
             headers: {
@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (response.ok) {
                     return response.json();
                 } else {
-                    // Try to get error message from response
+
                     return response.text().then(errorText => {
                         console.error('Error response:', errorText);
                         console.error('Response status:', response.status);
@@ -248,17 +248,17 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(orderResponse => {
                 console.log('Order created successfully:', orderResponse);
 
-                // Store cart items for confirmation page (for display purposes)
+
                 localStorage.setItem("purchasedItems", JSON.stringify(cart));
 
-                // Store order details
+
                 localStorage.setItem("orderDetails", JSON.stringify(orderResponse));
 
-                // Clear cart on server
+
                 return fetch('/api/cart/clear', { method: 'POST' });
             })
             .then(() => {
-                // Redirect to confirmation page
+
                 window.location.href = "/html/order/checkout-confirmation.html";
             })
             .catch(error => {
@@ -276,52 +276,52 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     });
 
-    // Login Modal Functions
+
     function showLoginModal() {
         const modal = document.getElementById('login-modal');
         const backdrop = document.getElementById('modal-backdrop');
-        
+
         modal.style.display = 'block';
         backdrop.style.display = 'block';
-        
-        // Add event listeners for modal actions
+
+
         document.getElementById('go-to-login').onclick = () => {
             hideLoginModal();
             window.location.href = '/html/auth/login.html';
         };
-        
+
         document.getElementById('stay-in-cart').onclick = () => {
             hideLoginModal();
         };
-        
-        // Close modal when clicking backdrop
+
+
         backdrop.onclick = () => {
             hideLoginModal();
         };
-        
-        // Close modal on Escape key
+
+
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 hideLoginModal();
             }
         });
     }
-    
+
     function hideLoginModal() {
         const modal = document.getElementById('login-modal');
         const backdrop = document.getElementById('modal-backdrop');
-        
+
         modal.style.display = 'none';
         backdrop.style.display = 'none';
     }
 
-    // Create confirmation.js file if it doesn't exist yet
+
     function createConfirmationJS() {
         fetch('/js/pages/order/confirmation.js')
             .then(response => {
                 if (!response.ok && response.status === 404) {
                     console.log("Creating confirmation.js file");
-                    // This would be handled server-side in a real app
+
                 }
             })
             .catch(() => {
@@ -331,6 +331,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     createConfirmationJS();
 
-    // Initial load
+
     loadCart();
 });

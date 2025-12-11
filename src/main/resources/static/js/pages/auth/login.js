@@ -4,14 +4,14 @@ document.addEventListener('DOMContentLoaded', function() {
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Clear previous errors
+
         document.getElementById('email-error').textContent = '';
         document.getElementById('password-error').textContent = '';
 
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        // Basic validation
+
         let isValid = true;
 
         if (!email) {
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (isValid) {
-            // Submit login request
+
             fetch('/api/auth/login', {
                 method: 'POST',
                 headers: {
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .then(data => {
-                // Store token in local storage
+
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify({
                     email: data.email,
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     lastName: data.lastName
                 }));
 
-                // Redirect to homepage
+
                 window.location.href = '/html/product/index.html';
             })
             .catch(error => {

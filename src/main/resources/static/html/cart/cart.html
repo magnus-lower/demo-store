@@ -8,17 +8,14 @@
     <link rel="icon" type="image/svg+xml" href="/assets/favicon-16.svg" sizes="16x16">
     <link rel="shortcut icon" href="/assets/favicon.svg">
     <link rel="stylesheet" href="/css/global/styles.css">
-    <link rel="stylesheet" href="/css/global/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <div class="cart-container">
         <h2>Din handlekurv</h2>
 
-        <!-- Container for cart items -->
         <ul id="cart-items" class="cart-items-list"></ul>
 
-        <!-- When the cart is empty -->
         <div id="empty-cart-message" class="empty-cart" style="display: none;">
             <i class="fas fa-shopping-cart fa-3x"></i>
             <p>Handlekurven din er tom.</p>
@@ -27,7 +24,6 @@
 
         <div id="cart-total" class="cart-total"></div>
 
-        <!-- Order summary details -->
         <div id="order-summary" class="order-summary" style="display: none;">
             <h3>Ordredetaljer</h3>
             <div class="summary-line">
@@ -48,7 +44,6 @@
             </div>
         </div>
 
-        <!-- Action buttons -->
         <div class="cart-actions">
             <button id="clear-cart" class="secondary-button" style="display: none;">
                 <i class="fas fa-trash"></i> Tøm handlekurv
@@ -62,7 +57,6 @@
         </div>
     </div>
 
-    <!-- Login Required Modal -->
     <div id="login-modal" class="modal" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">

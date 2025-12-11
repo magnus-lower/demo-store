@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     registerForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Clear previous errors
+
         document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
 
         const firstName = document.getElementById('firstName').value;
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        // Validation
+
         let isValid = true;
 
         if (!firstName) {
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (isValid) {
-            // Submit registration request
+
             fetch('/api/auth/register', {
                 method: 'POST',
                 headers: {
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => {
                 if (response.ok) {
-                    // Registration successful, redirect to login
+
                     window.location.href = '/html/auth/login.html?registered=true';
                 } else {
                     return response.json().then(data => {
