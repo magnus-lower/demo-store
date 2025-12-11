@@ -159,10 +159,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     document.getElementById("back-to-store").addEventListener("click", () => {
-        window.location.href = "/html/product/index.html";
+        window.location.href = "/html/index.html";
     });
     document.getElementById("back-to-store-empty").addEventListener("click", () => {
-        window.location.href = "/html/product/index.html";
+        window.location.href = "/html/index.html";
     });
 
 

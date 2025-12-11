@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         localStorage.removeItem("purchasedItems");
         localStorage.removeItem("orderDetails");
-        window.location.href = "/html/product/index.html";
+        window.location.href = "/html/index.html";
     });
 
 
