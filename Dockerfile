@@ -17,7 +17,7 @@ COPY . .
 RUN mvn package -DskipTests
 
 # Start a new image based on OpenJDK to run the application
-FROM openjdk:17-jdk-alpine
+FROM eclipse-temurin:17-jdk-alpine
 
 # Set the working directory in the final container
 WORKDIR /app
