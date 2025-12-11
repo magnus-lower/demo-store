@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => {
                 if (response.ok) {
                     // Registration successful, redirect to login
-                    window.location.href = 'login.html?registered=true';
+                    window.location.href = '/html/auth/login.html?registered=true';
                 } else {
                     return response.json().then(data => {
                         throw new Error(data.message || 'Registreringen mislyktes');

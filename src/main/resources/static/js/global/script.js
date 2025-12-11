@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 dropdownContent.classList.toggle('show', !isVisible);
             } else {
                 // Bruker er ikke logget inn - gå til innloggingsside
-                window.location.href = 'auth.html';
+                window.location.href = '/html/auth/auth.html';
             }
         });
     }
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (cartIcon) {
         cartIcon.addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'cart.html';
+            window.location.href = '/html/cart/cart.html';
         });
     }
 

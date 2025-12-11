@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }));
 
                 // Redirect to homepage
-                window.location.href = 'index.html';
+                window.location.href = '/html/product/index.html';
             })
             .catch(error => {
                 document.getElementById('password-error').textContent = error.message;

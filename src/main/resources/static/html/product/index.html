@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demobutikk</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="icon" type="image/svg+xml" href="favicon-16.svg" sizes="16x16">
-    <link rel="shortcut icon" href="favicon.svg">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon-16.svg" sizes="16x16">
+    <link rel="shortcut icon" href="/assets/favicon.svg">
+    <link rel="stylesheet" href="/css/global/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
@@ -43,7 +43,7 @@
             </div>
 
             <!-- Handlekurv -->
-            <a href="cart.html" class="cart-icon" id="cart-icon">
+            <a href="/html/cart/cart.html" class="cart-icon" id="cart-icon">
                 <i class="fas fa-shopping-cart"></i>
                 <span id="cart-count" class="cart-badge"></span>
             </a>
@@ -62,7 +62,7 @@
 <div id="cart-notification" class="cart-notification">
     <span class="notification-icon">️</span>
     <span>Varen er lagt til i handlekurven!</span>
-    <button class="notification-button" onclick="window.location.href='cart.html'">Vis handlekurv</button>
+    <button class="notification-button" onclick="window.location.href='/html/cart/cart.html'">Vis handlekurv</button>
 </div>
 
 <!-- Orders Modal -->
@@ -88,19 +88,19 @@
 
 <div id="category-list" class="category-list">
     <div class="category" onclick="filterProducts('Alle')">
-        <img src="images/all-products.jpg" alt="Alle produkter">
+        <img src="/images/all-products.jpg" alt="Alle produkter">
         <p>Alle produkter</p>
     </div>
     <div class="category" onclick="filterProducts('Mat og drikke')">
-        <img src="images/Bottle.jpg" alt="Mat og drikke">
+        <img src="/images/Bottle.jpg" alt="Mat og drikke">
         <p>Mat og drikke</p>
     </div>
     <div class="category" onclick="filterProducts('Klær')">
-        <img src="images/Sunglasses.jpg" alt="Klær">
+        <img src="/images/Sunglasses.jpg" alt="Klær">
         <p>Klær</p>
     </div>
     <div class="category" onclick="filterProducts('Møbler')">
-        <img src="images/Plant pot.jpg" alt="Møbler">
+        <img src="/images/Plant pot.jpg" alt="Møbler">
         <p>Møbler</p>
     </div>
 </div>
@@ -115,7 +115,7 @@
     <p>&copy; 2025 Demo-butikk</p>
 </footer>
 
-<script src="script.js"></script>
-<script src="responsive.js"></script>
+<script src="/js/global/script.js"></script>
+<script src="/js/global/responsive.js"></script>
 </body>
 </html>

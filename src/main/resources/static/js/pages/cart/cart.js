@@ -159,10 +159,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // "Back to store" buttons
     document.getElementById("back-to-store").addEventListener("click", () => {
-        window.location.href = "index.html";
+        window.location.href = "/html/product/index.html";
     });
     document.getElementById("back-to-store-empty").addEventListener("click", () => {
-        window.location.href = "index.html";
+        window.location.href = "/html/product/index.html";
     });
 
     // "Clear cart" button
@@ -259,7 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(() => {
                 // Redirect to confirmation page
-                window.location.href = "checkout-confirmation.html";
+                window.location.href = "/html/order/checkout-confirmation.html";
             })
             .catch(error => {
                 console.error('Checkout error:', error);
@@ -287,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Add event listeners for modal actions
         document.getElementById('go-to-login').onclick = () => {
             hideLoginModal();
-            window.location.href = 'login.html';
+            window.location.href = '/html/auth/login.html';
         };
         
         document.getElementById('stay-in-cart').onclick = () => {
@@ -317,7 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Create confirmation.js file if it doesn't exist yet
     function createConfirmationJS() {
-        fetch('confirmation.js')
+        fetch('/js/pages/order/confirmation.js')
             .then(response => {
                 if (!response.ok && response.status === 404) {
                     console.log("Creating confirmation.js file");

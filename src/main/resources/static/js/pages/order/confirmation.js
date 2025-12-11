@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Clear localStorage and redirect to store
         localStorage.removeItem("purchasedItems");
         localStorage.removeItem("orderDetails");
-        window.location.href = "index.html";
+        window.location.href = "/html/product/index.html";
     });
 
     // Optional: Clear localStorage after a delay to prevent browser back button issues
