@@ -1,4 +1,4 @@
-package com.example.ecommerce.web.dto;
+package com.example.ecommerce.web.order.dto;
 
 import com.example.ecommerce.domain.model.OrderStatus;
 import lombok.Getter;

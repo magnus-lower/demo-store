@@ -1,7 +1,6 @@
 package com.example.ecommerce.infrastructure.session;
 
 import com.example.ecommerce.application.session.CartStorage;
-import com.example.ecommerce.application.session.CartStorageFactory;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
 

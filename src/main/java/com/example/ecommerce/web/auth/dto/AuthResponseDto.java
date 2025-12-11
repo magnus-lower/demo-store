@@ -1,4 +1,4 @@
-package com.example.ecommerce.web.dto;
+package com.example.ecommerce.web.auth.dto;
 
 import lombok.Data;
 

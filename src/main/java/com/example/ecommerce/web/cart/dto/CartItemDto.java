@@ -1,4 +1,4 @@
-package com.example.ecommerce.web.dto;
+package com.example.ecommerce.web.cart.dto;
 
 import lombok.Data;
 import java.math.BigDecimal;

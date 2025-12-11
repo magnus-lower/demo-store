@@ -1,4 +1,4 @@
-package com.example.ecommerce.web.controller;
+package com.example.ecommerce.web.order;
 
 import org.springframework.web.bind.annotation.RestController;
 

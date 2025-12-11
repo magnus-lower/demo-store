@@ -1,4 +1,4 @@
-package com.example.ecommerce.application.security;
+package com.example.ecommerce.infrastructure.security;
 
 import com.example.ecommerce.domain.model.User;
 import com.example.ecommerce.domain.repository.UserRepository;

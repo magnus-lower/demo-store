@@ -1,7 +1,7 @@
-package com.example.ecommerce.web.controller;
+package com.example.ecommerce.web.order;
 
-import com.example.ecommerce.web.dto.CheckoutRequestDto;
-import com.example.ecommerce.web.dto.OrderResponseDto;
+import com.example.ecommerce.web.order.dto.CheckoutRequestDto;
+import com.example.ecommerce.web.order.dto.OrderResponseDto;
 import com.example.ecommerce.domain.exception.InsufficientStockException;
 import com.example.ecommerce.domain.model.Address;
 import com.example.ecommerce.domain.model.Order;

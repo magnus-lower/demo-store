@@ -1,9 +1,9 @@
-package com.example.ecommerce.web.controller;
+package com.example.ecommerce.web.auth;
 
-import com.example.ecommerce.web.dto.AuthResponseDto;
-import com.example.ecommerce.web.dto.LoginRequestDto;
-import com.example.ecommerce.web.dto.PasswordResetRequestDto;
-import com.example.ecommerce.web.dto.RegisterRequestDto;
+import com.example.ecommerce.web.auth.dto.AuthResponseDto;
+import com.example.ecommerce.web.auth.dto.LoginRequestDto;
+import com.example.ecommerce.web.auth.dto.PasswordResetRequestDto;
+import com.example.ecommerce.web.auth.dto.RegisterRequestDto;
 import com.example.ecommerce.domain.exception.UserAlreadyExistsException;
 import com.example.ecommerce.domain.model.User;
 import com.example.ecommerce.infrastructure.security.JwtUtil;

@@ -1,8 +1,8 @@
-package com.example.ecommerce.web.controller;
+package com.example.ecommerce.web.cart;
 
 import com.example.ecommerce.application.service.CartService;
 import com.example.ecommerce.application.session.CartStorage;
-import com.example.ecommerce.application.session.CartStorageFactory;
+import com.example.ecommerce.infrastructure.session.CartStorageFactory;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
