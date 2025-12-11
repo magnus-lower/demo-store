@@ -75,7 +75,7 @@ public class ProductDataInitializer {
             termokanne.setName("Termokanne");
             termokanne.setDescription("Isolert termokanne som holder drikken varm i timevis");
             termokanne.setPrice(new BigDecimal("24.99"));
-            termokanne.setImageUrl("/images/Bottle.jpg");
+            termokanne.setImageUrl("/images/bottle.jpg");
             termokanne.setCategory("Mat og drikke");
             termokanne.setStockQuantity(20);
 
