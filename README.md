@@ -43,40 +43,88 @@ Here's how I structured the project - it follows standard Spring Boot convention
 src/
 ├── main/
 │   ├── java/com/example/ecommerce/
-│   │   ├── config/           # Configuration classes
-│   │   │   └── SecurityConfig.java
-│   │   ├── controller/       # REST API endpoints
-│   │   │   ├── AuthController.java
-│   │   │   ├── CartController.java
-│   │   │   ├── CheckoutController.java
-│   │   │   └── ProductController.java
-│   │   ├── dto/             # Data Transfer Objects
-│   │   │   ├── AuthResponseDto.java
-│   │   │   ├── CheckoutRequestDto.java
-│   │   │   └── OrderResponseDto.java
-│   │   ├── exception/       # Custom exceptions
-│   │   ├── model/           # Entity classes
-│   │   │   ├── User.java
-│   │   │   ├── Product.java
-│   │   │   ├── Order.java
-│   │   │   └── OrderItem.java
-│   │   ├── repository/      # Data access layer
-│   │   ├── security/        # Security components
-│   │   │   ├── JwtUtil.java
-│   │   │   └── JwtFilter.java
-│   │   └── service/         # Business logic
-│   │       ├── UserService.java
-│   │       ├── ProductService.java
-│   │       ├── CartService.java
-│   │       └── OrderService.java
+│   │   ├── ECommercePlatformApplication.java
+│   │   │
+│   │   ├── application/          
+│   │   │   ├── service/
+│   │   │   │   ├── ProductService.java
+│   │   │   │   ├── UserService.java
+│   │   │   │   ├── CartService.java
+│   │   │   │   └── OrderService.java
+│   │   │   └── session/
+│   │   │       └── CartStoragePort.java
+│   │   │
+│   │   ├── domain/              
+│   │   │   ├── model/
+│   │   │   │   ├── User.java
+│   │   │   │   ├── Product.java
+│   │   │   │   ├── Order.java
+│   │   │   │   └── OrderItem.java
+│   │   │   ├── exception/
+│   │   │   │   ├── ProductNotFoundException.java
+│   │   │   │   └── InsufficientStockException.java
+│   │   │   └── repository/
+│   │   │       ├── UserRepository.java
+│   │   │       ├── ProductRepository.java
+│   │   │       └── OrderRepository.java
+│   │   │
+│   │   ├── infrastructure/      
+│   │   │   ├── bootstrap/
+│   │   │   │   └── ProductDataInitializer.java
+│   │   │   ├── config/
+│   │   │   │   └── SecurityConfig.java
+│   │   │   ├── security/
+│   │   │   │   ├── JwtUtil.java
+│   │   │   │   ├── JwtFilter.java
+│   │   │   │   └── UserDetailsServiceImpl.java
+│   │   │   └── session/
+│   │   │       ├── CartStorageFactory.java
+│   │   │       └── HttpSessionCartStorageFactory.java
+│   │   │
+│   │   └── web/                 
+│   │       ├── auth/
+│   │       │   ├── AuthController.java
+│   │       │   └── dto/
+│   │       │       ├── LoginRequestDto.java
+│   │       │       ├── RegisterRequestDto.java
+│   │       │       └── AuthResponseDto.java
+│   │       │
+│   │       ├── cart/
+│   │       │   ├── CartController.java
+│   │       │   └── dto/
+│   │       │       └── CartItemDto.java
+│   │       │
+│   │       ├── order/
+│   │       │   ├── CheckoutController.java
+│   │       │   ├── OrderController.java
+│   │       │   └── dto/
+│   │       │       ├── CheckoutRequestDto.java
+│   │       │       └── OrderResponseDto.java
+│   │       │
+│   │       ├── product/
+│   │       │   └── ProductController.java
+│   │       │
+│   │       ├── health/
+│   │       │   └── HealthController.java
+│   │       │
+│   │       └── exception/
+│   │           └── GlobalExceptionHandler.java
+│   │
 │   └── resources/
-│       ├── static/          # Frontend assets
-│       │   ├── *.html       # Web pages
-│       │   ├── *.css        # Stylesheets
-│       │   ├── *.js         # JavaScript files
-│       │   └── images/      # Product images
-│       └── application.properties
-└── test/                    # Test classes
+│       ├── application.properties
+│       └── static/             
+│           ├── html/
+│           ├── css/
+│           ├── js/
+│           ├── assets/
+│           └── images/
+│
+└── test/                        
+    └── java/com/example/ecommerce/
+        ├── application/service/
+        ├── domain/model/
+        ├── integration/
+        └── web/health/
 ```
 
 ## API Endpoints I Created

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demobutikk</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon-16.svg" sizes="16x16">
+    <link rel="shortcut icon" href="/assets/favicon.svg">
+    <link rel="stylesheet" href="/css/global/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<header class="site-header">
+    <div class="header-content">
+        <a href="#" class="store-name" onclick="location.reload()">Demo-butikk</a>
+
+        <div class="header-controls">
+            <div class="search-container">
+                <input type="text" class="search-input" id="search-box" placeholder="Hva ser du etter?" onkeyup="filterProducts()">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            <button class="dropdown-button" onclick="toggleCategories()">Kategori</button>
+        </div>
+
+        <div class="header-actions">
+            <div class="user-wrapper">
+                <div class="user-dropdown">
+                    <a href="#" class="user-icon" id="user-icon">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <div class="dropdown-content" id="user-dropdown-content">
+                        <a href="#" id="view-orders">
+                            <i class="fas fa-shopping-bag"></i> Mine bestillinger
+                        </a>
+                        <hr>
+                        <a href="#" id="logout-button">
+                            <i class="fas fa-sign-out-alt"></i> Logg ut
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <a href="/html/cart/cart.html" class="cart-icon" id="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count" class="cart-badge"></span>
+            </a>
+        </div>
+
+        <a href="https://magnuslow.com/projects.html" class="back-to-site-btn" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m12 19-7-7 7-7"></path>
+                <path d="m19 12H5"></path>
+            </svg>
+            Tilbake til nettsiden
+        </a>
+    </div>
+</header>
+
+<div id="cart-notification" class="cart-notification">
+    <span class="notification-icon">️</span>
+    <span>Varen er lagt til i handlekurven!</span>
+    <button class="notification-button" onclick="window.location.href='/html/cart/cart.html'">Vis handlekurv</button>
+</div>
+
+<div id="orders-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Mine bestillinger</h2>
+            <span class="close" id="close-orders-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div id="orders-list">
+                <p>Laster bestillinger...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav class="main-nav">
+    <button class="menu-toggle" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+    </button>
+</nav>
+
+<div id="category-list" class="category-list">
+    <div class="category" onclick="filterProducts('Alle')">
+        <img src="/images/all-products.jpg" alt="Alle produkter">
+        <p>Alle produkter</p>
+    </div>
+    <div class="category" onclick="filterProducts('Mat og drikke')">
+        <img src="/images/bottle.jpg" alt="Mat og drikke">
+        <p>Mat og drikke</p>
+    </div>
+    <div class="category" onclick="filterProducts('Klær')">
+        <img src="/images/Sunglasses.jpg" alt="Klær">
+        <p>Klær</p>
+    </div>
+    <div class="category" onclick="filterProducts('Møbler')">
+        <img src="/images/bookshelf.jpg" alt="Møbler">
+        <p>Møbler</p>
+    </div>
+</div>
+
+<main>
+    <div id="product-list" class="product-grid"></div>
+</main>
+
+<button id="back-to-top" title="Tilbake til toppen">↑</button>
+
+<footer class="site-footer">
+    <p>&copy; 2025 Demo-butikk</p>
+</footer>
+
+<script src="/js/global/script.js"></script>
+<script src="/js/global/responsive.js"></script>
+</body>
+</html>
