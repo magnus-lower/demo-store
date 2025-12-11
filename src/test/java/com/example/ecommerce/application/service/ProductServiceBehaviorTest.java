@@ -1,4 +1,4 @@
-package com.example.ecommerce.service;
+package com.example.ecommerce.application.service;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -14,11 +14,11 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.example.ecommerce.model.Product;
-import com.example.ecommerce.repository.ProductRepository;
+import com.example.ecommerce.domain.model.Product;
+import com.example.ecommerce.domain.repository.ProductRepository;
 
 @ExtendWith(MockitoExtension.class)
-class ProductServiceTest {
+class ProductServiceBehaviorTest {
 
     @Mock
     private ProductRepository productRepository;
