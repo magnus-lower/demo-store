@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Din handlekurv</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon-16.svg" sizes="16x16">
+    <link rel="shortcut icon" href="/assets/favicon.svg">
+    <link rel="stylesheet" href="/css/global/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="cart-container">
+        <h2>Din handlekurv</h2>
+
+        <ul id="cart-items" class="cart-items-list"></ul>
+
+        <div id="empty-cart-message" class="empty-cart" style="display: none;">
+            <i class="fas fa-shopping-cart fa-3x"></i>
+            <p>Handlekurven din er tom.</p>
+            <button id="back-to-store-empty" class="primary-button">Gå til butikken</button>
+        </div>
+
+        <div id="cart-total" class="cart-total"></div>
+
+        <div id="order-summary" class="order-summary" style="display: none;">
+            <h3>Ordredetaljer</h3>
+            <div class="summary-line">
+                <span>Antall varer:</span>
+                <span id="items-count"></span>
+            </div>
+            <div class="summary-line">
+                <span>Sum varer:</span>
+                <span id="items-total"></span>
+            </div>
+            <div class="summary-line">
+                <span>Frakt:</span>
+                <span id="shipping-cost">kr 49.00</span>
+            </div>
+            <div class="summary-line total">
+                <span>Totalt:</span>
+                <span id="final-total"></span>
+            </div>
+        </div>
+
+        <div class="cart-actions">
+            <button id="clear-cart" class="secondary-button" style="display: none;">
+                <i class="fas fa-trash"></i> Tøm handlekurv
+            </button>
+            <button id="back-to-store" class="secondary-button" style="display: none;">
+                <i class="fas fa-arrow-left"></i> Fortsett å handle
+            </button>
+            <button id="checkout-button" class="checkout-btn" style="display: none;">
+                <i class="fas fa-check"></i> Gå til betaling
+            </button>
+        </div>
+    </div>
+
+    <div id="login-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-lock"></i> Pålogging kreves</h3>
+            </div>
+            <div class="modal-body">
+                <p>For å fullføre bestillingen må du være logget inn. Du kan enten:</p>
+                <ul class="login-options">
+                    <li><i class="fas fa-sign-in-alt"></i> Logge inn med din eksisterende konto</li>
+                    <li><i class="fas fa-user-plus"></i> Opprette en ny konto hvis du ikke har en</li>
+                    <li><i class="fas fa-shopping-cart"></i> Fortsette å handle og logge inn senere</li>
+                </ul>
+            </div>
+            <div class="modal-actions">
+                <button id="go-to-login" class="primary-button">
+                    <i class="fas fa-sign-in-alt"></i> Gå til pålogging
+                </button>
+                <button id="stay-in-cart" class="secondary-button">
+                    <i class="fas fa-shopping-cart"></i> Fortsett å handle
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="modal-backdrop" class="modal-backdrop" style="display: none;"></div>
+
+    <button id="back-to-top" title="Tilbake til toppen">↑</button>
+
+    <footer class="site-footer">
+        <p>&copy; 2023 Demo-butikk</p>
+    </footer>
+
+    <script src="/js/pages/cart/cart.js"></script>
+    <script src="/js/global/responsive.js"></script>
+</body>
+</html>
