@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 productElement.className = "product fade-in";
                 productElement.dataset.id = product.id;
                 productElement.style.animationDelay = `${index * 0.1}s`;
-                const price = Demo.element('p');
+                const price = Demo.element('p', 'product-price');
                 price.append(Demo.element('strong', '', 'kr ' + Number(product.price).toFixed(2)));
                 const button = Demo.element('button', '', 'Legg i handlekurv');
                 button.addEventListener('click', async () => {

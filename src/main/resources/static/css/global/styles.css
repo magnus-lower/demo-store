@@ -1324,8 +1324,12 @@ button:hover {
     margin-bottom: 15px;
 }
 
-.product button {
+.product .product-price {
     margin-top: auto;
+}
+
+.product button {
+    margin-top: 0;
     padding: 10px;
     background-color: #2e7d32;
     color: white;
