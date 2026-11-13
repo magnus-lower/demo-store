@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             image.style.width = '50px';
             image.style.height = 'auto';
             row.append(image, document.createTextNode(item.name + ' - kr ' + Number(item.price).toFixed(2)));
+            const controls = Demo.element('div', 'quantity-controls');
             for (const [className, label, name] of [
                 ['decrease', '-', 'Reduser antall'], ['quantity', item.quantity, ''],
                 ['increase', '+', 'Øk antall'], ['remove-item', '×', 'Fjern vare']
@@ -48,8 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     control.setAttribute('aria-label', name + ': ' + item.name);
                     control.addEventListener('click', () => changeCart(item, className));
                 }
-                row.append(control);
+                controls.append(control);
             }
+            row.append(controls);
             list.append(row);
             count += item.quantity;
             total += Number(item.price) * item.quantity;

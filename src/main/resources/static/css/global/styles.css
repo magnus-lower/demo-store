@@ -267,7 +267,7 @@ button:hover {
 }
 
 .category:hover p {
-    color: #4CAF50;
+    color: #2e7d32;
     transform: translateY(-2px);
 }
 
@@ -395,6 +395,18 @@ button:hover {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+#cart-items .quantity-controls button,
+#cart-items .quantity-controls .quantity {
+    margin: 0;
+}
+
+#cart-items .quantity-controls .remove-item {
+    margin-left: 8px;
+    flex-shrink: 0;
 }
 
 .increase, .decrease {
@@ -501,7 +513,7 @@ button:hover {
 
 .checkout-btn {
     padding: 15px 30px;
-    background-color: #4CAF50;
+    background-color: #2e7d32;
     color: white;
     border: none;
     border-radius: 4px;
@@ -520,7 +532,7 @@ button:hover {
 }
 
 .checkout-btn:hover {
-    background-color: #45a049;
+    background-color: #256829;
 }
 
 .empty-cart {
@@ -540,7 +552,7 @@ button:hover {
 }
 
 .primary-button {
-    background-color: #4CAF50;
+    background-color: #2e7d32;
     color: white;
     padding: 12px 24px;
     font-size: 16px;
@@ -552,7 +564,7 @@ button:hover {
 }
 
 .primary-button:hover {
-    background-color: #45a049;
+    background-color: #256829;
 }
 
 .notification-icon {
@@ -561,7 +573,7 @@ button:hover {
 }
 
 .notification-button {
-    background-color: #4caf50;
+    background-color: #2e7d32;
     color: white;
     border: none;
     border-radius: 5px;
@@ -572,7 +584,7 @@ button:hover {
 }
 
 .notification-button:hover {
-    background-color: #45a049;
+    background-color: #256829;
 }
 
 
@@ -594,7 +606,7 @@ button:hover {
 
 #back-to-store {
     padding: 12px 24px;
-    background-color: #4caf50;
+    background-color: #2e7d32;
     color: white;
     border: none;
     border-radius: 8px;
@@ -635,7 +647,7 @@ button:hover {
 
 .confirmation-icon {
     font-size: 60px;
-    color: #4CAF50;
+    color: #2e7d32;
     margin: 20px 0;
 }
 
@@ -716,7 +728,7 @@ button:hover {
 }
 
 .user-dropdown-button {
-    background-color: #4CAF50;
+    background-color: #2e7d32;
     color: white;
     padding: 10px 15px;
     font-size: 16px;
@@ -730,7 +742,7 @@ button:hover {
 }
 
 .user-dropdown-button:hover {
-    background-color: #45a049;
+    background-color: #256829;
 }
 
 .dropdown-icon {
@@ -752,7 +764,7 @@ button:hover {
 }
 
 .register-button {
-    background-color: #4CAF50;
+    background-color: #2e7d32;
     color: white;
 }
 
@@ -785,7 +797,6 @@ button:hover {
     justify-content: center;
     width: 36px;
     height: 36px;
-    right: 50px;
     border-radius: 50%;
     background-color: #f1f1f1;
     color: #333;
@@ -799,15 +810,15 @@ button:hover {
 
 
 .user-icon.logged-in {
-    background-color: #4CAF50;
+    background-color: #2e7d32;
     color: white;
-    box-shadow: 0 0 0 2px #45a049;
+    box-shadow: 0 0 0 2px #256829;
     transition: all 0.3s ease;
 }
 
 .user-icon.logged-in:hover {
-    background-color: #45a049;
-    box-shadow: 0 0 0 2px #388e3c;
+    background-color: #256829;
+    box-shadow: 0 0 0 2px #1b5e20;
 }
 
 
@@ -820,8 +831,8 @@ button:hover {
 @keyframes logoutPulse {
     0% {
         transform: scale(1);
-        background-color: #4CAF50;
-        box-shadow: 0 0 0 2px #45a049;
+        background-color: #2e7d32;
+        box-shadow: 0 0 0 2px #256829;
     }
     25% {
         transform: scale(1.1);
@@ -903,7 +914,7 @@ button:hover {
 
 .modal-header {
     padding: 20px;
-    background-color: #4CAF50;
+    background-color: #2e7d32;
     color: white;
     border-radius: 8px 8px 0 0;
     display: flex;
@@ -959,7 +970,7 @@ button:hover {
 }
 
 .login-options li i {
-    color: #4CAF50;
+    color: #2e7d32;
     width: 16px;
 }
 
@@ -994,12 +1005,12 @@ button:hover {
 }
 
 .modal-actions .primary-button {
-    background-color: #4CAF50;
+    background-color: #2e7d32;
     color: white;
 }
 
 .modal-actions .primary-button:hover {
-    background-color: #45a049;
+    background-color: #256829;
     transform: translateY(-1px);
 }
 
@@ -1236,7 +1247,7 @@ button:hover {
 
 .dropdown-button {
     padding: 12px 24px;
-    background-color: #4CAF50;
+    background-color: #2e7d32;
     color: white;
     border: none;
     border-radius: 8px;
@@ -1250,19 +1261,19 @@ button:hover {
 }
 
 .dropdown-button:hover {
-    background-color: #45a049;
+    background-color: #256829;
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .dropdown-button:active {
     transform: translateY(0);
-    background-color: #388e3c;
+    background-color: #1b5e20;
     transition: all 0.1s ease;
 }
 
 .dropdown-button.active {
-    background-color: #388e3c;
+    background-color: #1b5e20;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
@@ -1316,7 +1327,7 @@ button:hover {
 .product button {
     margin-top: auto;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #2e7d32;
     color: white;
     border: none;
     border-radius: 4px;
@@ -1331,7 +1342,7 @@ button:hover {
     right: 20px;
     width: 40px;
     height: 40px;
-    background-color: #4CAF50;
+    background-color: #2e7d32;
     color: white;
     border: none;
     border-radius: 50%;
@@ -1353,7 +1364,7 @@ button:hover {
 }
 
 .site-footer a {
-    color: #4CAF50;
+    color: #2e7d32;
     text-decoration: none;
 }
 
@@ -1489,9 +1500,9 @@ button:hover {
         height: 100px;
     }
 
-    .quantity-controls {
+    .cart-items-list .quantity-controls {
         justify-content: center;
-        margin: 10px 0;
+        margin: 0;
     }
 
     .remove-item {
