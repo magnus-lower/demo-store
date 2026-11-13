@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (isValid) {
 
-            fetch('/api/auth/login', {
+            Demo.request('/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -38,13 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     email: email,
                     password: password
                 })
-            })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Ugyldig e-post eller passord');
-                }
             })
             .then(data => {
 

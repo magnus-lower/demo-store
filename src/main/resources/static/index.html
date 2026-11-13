@@ -17,16 +17,16 @@
 
         <div class="header-controls">
             <div class="search-container">
-                <input type="text" class="search-input" id="search-box" placeholder="Hva ser du etter?" onkeyup="filterProducts()">
+                <input type="text" class="search-input" id="search-box" placeholder="Hva ser du etter?" aria-label="Søk etter produkter">
                 <i class="fas fa-search search-icon"></i>
             </div>
-            <button class="dropdown-button" onclick="toggleCategories()">Kategori</button>
+            <button class="dropdown-button" onclick="toggleCategories()" aria-controls="category-list" aria-expanded="false">Kategori</button>
         </div>
 
         <div class="header-actions">
             <div class="user-wrapper">
                 <div class="user-dropdown">
-                    <a href="#" class="user-icon" id="user-icon">
+                    <a href="#" class="user-icon" id="user-icon" aria-label="Konto" aria-expanded="false" aria-controls="user-dropdown-content">
                         <i class="fas fa-user"></i>
                     </a>
                     <div class="dropdown-content" id="user-dropdown-content">
@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <a href="/html/cart/cart.html" class="cart-icon" id="cart-icon">
+            <a href="/html/cart/cart.html" class="cart-icon" id="cart-icon" aria-label="Handlekurv">
                 <i class="fas fa-shopping-cart"></i>
                 <span id="cart-count" class="cart-badge"></span>
             </a>
@@ -57,17 +57,19 @@
     </div>
 </header>
 
-<div id="cart-notification" class="cart-notification">
+<p class="demo-notice demo-banner">Dette er en demobutikk. Ingen ekte kjøp gjennomføres, og data nullstilles når appen starter på nytt.</p>
+
+<div role="status" aria-live="polite" id="cart-notification" class="cart-notification">
     <span class="notification-icon">️</span>
     <span>Varen er lagt til i handlekurven!</span>
     <button class="notification-button" onclick="window.location.href='/html/cart/cart.html'">Vis handlekurv</button>
 </div>
 
-<div id="orders-modal" class="modal" style="display: none;">
+<div id="orders-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="orders-title" tabindex="-1" style="display: none;">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Mine bestillinger</h2>
-            <span class="close" id="close-orders-modal">&times;</span>
+            <h2 id="orders-title">Mine bestillinger</h2>
+            <button type="button" class="close" id="close-orders-modal" data-close-dialog aria-label="Lukk bestillinger">&times;</button>
         </div>
         <div class="modal-body">
             <div id="orders-list">
@@ -78,28 +80,28 @@
 </div>
 
 <nav class="main-nav">
-    <button class="menu-toggle" onclick="toggleMobileMenu()">
+    <button aria-label="Vis kategorier" class="menu-toggle" onclick="toggleMobileMenu()">
         <i class="fas fa-bars"></i>
     </button>
 </nav>
 
 <div id="category-list" class="category-list">
-    <div class="category" onclick="filterProducts('Alle')">
+    <button type="button" class="category" onclick="filterProducts('Alle')">
         <img src="/images/all-products.jpg" alt="Alle produkter">
         <p>Alle produkter</p>
-    </div>
-    <div class="category" onclick="filterProducts('Mat og drikke')">
+    </button>
+    <button type="button" class="category" onclick="filterProducts('Mat og drikke')">
         <img src="/images/drinking bottle.jpg" alt="Mat og drikke">
         <p>Mat og drikke</p>
-    </div>
-    <div class="category" onclick="filterProducts('Klær')">
+    </button>
+    <button type="button" class="category" onclick="filterProducts('Klær')">
         <img src="/images/scarf.jpg" alt="Klær">
         <p>Klær</p>
-    </div>
-    <div class="category" onclick="filterProducts('Møbler')">
+    </button>
+    <button type="button" class="category" onclick="filterProducts('Møbler')">
         <img src="/images/desk-chair.jpg" alt="Møbler">
         <p>Møbler</p>
-    </div>
+    </button>
 </div>
 
 <main>
@@ -112,6 +114,7 @@
     <p>&copy; 2025 Demo-butikk</p>
 </footer>
 
+<script src="/js/global/demo.js"></script>
 <script src="/js/global/script.js"></script>
 <script src="/js/global/responsive.js"></script>
 </body>

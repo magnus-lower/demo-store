@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "orders", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "checkout_request_id"}))
 @Getter
 @Setter
 public class Order {
@@ -18,6 +18,9 @@ public class Order {
 
     @Column(nullable = false)
     private String orderNumber;
+
+    @Column(name = "checkout_request_id", nullable = false)
+    private UUID checkoutRequestId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

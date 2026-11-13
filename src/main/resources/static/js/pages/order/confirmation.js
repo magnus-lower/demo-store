@@ -1,80 +1,42 @@
-document.addEventListener("DOMContentLoaded", () => {
-
-    const purchasedItems = JSON.parse(localStorage.getItem("purchasedItems") || "[]");
-    const orderDetails = JSON.parse(localStorage.getItem("orderDetails") || "{}");
-    const purchasedItemsContainer = document.getElementById("purchased-items");
-
-
-    if (orderDetails.orderNumber) {
-        const confirmationContainer = document.querySelector('.confirmation-container h1');
-        if (confirmationContainer) {
-            confirmationContainer.innerHTML = `
-                Takk for din bestilling!
-                <div style="font-size: 18px; color: #666; margin-top: 10px;">
-                    Ordrenummer: ${orderDetails.orderNumber}
-                </div>
-            `;
+document.addEventListener('DOMContentLoaded', () => {
+    let items = [], order = {};
+    try {
+        items = JSON.parse(localStorage.getItem('purchasedItems') || '[]');
+        order = JSON.parse(localStorage.getItem('orderDetails') || '{}');
+    } catch {
+        // The confirmation page remains useful when browser storage is unavailable.
+    }
+    const container = document.getElementById('purchased-items');
+    if (!order.orderNumber) {
+        container.textContent = 'Ingen demobestilling å vise. Du finner tidligere bestillinger under kontomenyen.';
+    } else {
+        document.querySelector('.confirmation-container h1').append(
+            Demo.element('div', 'confirmation-number', 'Demobestilling: ' + order.orderNumber));
+        for (const item of items) {
+            const row = Demo.element('div', 'purchased-item');
+            const details = Demo.element('div', 'item-details');
+            details.append(Demo.element('h3', '', item.name),
+                Demo.element('p', '', 'Pris: kr ' + Number(item.price).toFixed(2)),
+                Demo.element('p', '', 'Antall: ' + item.quantity),
+                Demo.element('p', '', 'Sum: kr ' + (item.price * item.quantity).toFixed(2)));
+            row.append(Demo.image(item.imageUrl, item.name, 'item-image'), details);
+            container.append(row);
+        }
+        const total = document.getElementById('order-total');
+        const amount = Number(order.totalAmount);
+        for (const [label, value, className] of [
+            ['Sum varer:', amount - 49, 'total-line'],
+            ['Simulert frakt:', 49, 'total-line'],
+            ['Totalt (demo):', amount, 'total-line grand-total']
+        ]) {
+            const line = Demo.element('div', className);
+            line.append(Demo.element('span', '', label), Demo.element('span', '', 'kr ' + value.toFixed(2)));
+            total.append(line);
         }
     }
-
-
-    if (purchasedItems.length === 0) {
-        purchasedItemsContainer.innerHTML = "<p>Ingen varer funnet.</p>";
-    } else {
-        let totalAmount = 0;
-        const itemsHtml = purchasedItems.map(item => {
-            let price = typeof item.price === "object" && item.price !== null
-                ? (item.price.value || item.price)
-                : item.price;
-
-            totalAmount += price * item.quantity;
-
-            return `
-                <div class="purchased-item">
-                    <img src="${item.imageUrl}" alt="${item.name}" class="item-image">
-                    <div class="item-details">
-                        <h3>${item.name}</h3>
-                        <p>Pris: kr ${price.toFixed(2)}</p>
-                        <p>Antall: ${item.quantity}</p>
-                        <p>Sum: kr ${(price * item.quantity).toFixed(2)}</p>
-                    </div>
-                </div>
-            `;
-        }).join('');
-
-        purchasedItemsContainer.innerHTML = itemsHtml;
-
-
-        const shipping = 49.00;
-        const finalTotal = orderDetails.totalAmount || (totalAmount + shipping);
-
-        document.getElementById("order-total").innerHTML = `
-            <div class="total-line">
-                <span>Sum varer:</span>
-                <span>kr ${totalAmount.toFixed(2)}</span>
-            </div>
-            <div class="total-line">
-                <span>Frakt:</span>
-                <span>kr ${shipping.toFixed(2)}</span>
-            </div>
-            <div class="total-line grand-total">
-                <span>Totalt:</span>
-                <span>kr ${finalTotal.toFixed ? finalTotal.toFixed(2) : finalTotal}</span>
-            </div>
-        `;
-    }
-
-
-    document.getElementById("back-to-store-button").addEventListener("click", () => {
-
-        localStorage.removeItem("purchasedItems");
-        localStorage.removeItem("orderDetails");
-        window.location.href = "/index.html";
+    document.getElementById('back-to-store-button').addEventListener('click', () => {
+        localStorage.removeItem('purchasedItems');
+        localStorage.removeItem('orderDetails');
+        window.location.href = '/index.html';
     });
-
-
-    setTimeout(() => {
-        localStorage.removeItem("purchasedItems");
-        localStorage.removeItem("orderDetails");
-    }, 30000);
 });

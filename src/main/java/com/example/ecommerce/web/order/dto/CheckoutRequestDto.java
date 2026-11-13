@@ -1,25 +1,24 @@
 package com.example.ecommerce.web.order.dto;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.Map;
+import java.util.UUID;
 
 @Getter
 @Setter
 public class CheckoutRequestDto {
-    @NotEmpty
-    private String street;
-    @NotEmpty
-    private String city;
-    @NotEmpty
-    private String zipCode;
-    @NotEmpty
-    private String country;
-
-    // Map of productId to quantity
     @NotNull
-    private Map<Long, Integer> items;
+    private UUID requestId;
+    @NotBlank @Size(max = 150)
+    private String street;
+    @NotBlank @Size(max = 100)
+    private String city;
+    @NotBlank @Size(max = 20)
+    private String zipCode;
+    @NotBlank @Size(max = 100)
+    private String country;
+    @NotEmpty @Size(max = 100)
+    private Map<@NotNull @Positive Long, @NotNull @Positive @Max(1000) Integer> items;
 }

@@ -6,10 +6,11 @@ import lombok.Data;
 
 @Data
 public class LoginRequestDto {
-    @NotBlank(message = "Email is required")
-    @Email(message = "Email must be valid")
+    @NotBlank(message = "E-postadresse er påkrevd")
+    @Email(message = "Oppgi en gyldig e-postadresse")
+    @jakarta.validation.constraints.Size(max = 254)
     private String email;
 
-    @NotBlank(message = "Password is required")
+    @NotBlank(message = "Passord er påkrevd")
     private String password;
 }

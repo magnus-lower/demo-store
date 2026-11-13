@@ -1,5 +1,6 @@
 package com.example.ecommerce.application.service;
 
+import com.example.ecommerce.domain.exception.ProductNotFoundException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -16,6 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 public class ProductService {
 
     private final ProductRepository productRepository;
+
+    public Product getProduct(Long id) {
+        return productRepository.findById(id).orElseThrow(() ->
+                new ProductNotFoundException("Product not found"));
+    }
 
     public List<Product> getProducts() {
         List<Product> products = productRepository.findAll();

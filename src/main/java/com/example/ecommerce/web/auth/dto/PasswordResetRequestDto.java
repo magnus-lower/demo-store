@@ -6,7 +6,8 @@ import lombok.Data;
 
 @Data
 public class PasswordResetRequestDto {
-    @NotBlank(message = "Email is required")
-    @Email(message = "Email must be valid")
+    @NotBlank(message = "E-postadresse er påkrevd")
+    @Email(message = "Oppgi en gyldig e-postadresse")
+    @jakarta.validation.constraints.Size(max = 254)
     private String email;
 }

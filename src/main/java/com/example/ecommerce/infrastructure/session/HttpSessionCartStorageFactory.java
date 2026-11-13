@@ -27,12 +27,19 @@ public class HttpSessionCartStorageFactory implements CartStorageFactory {
             if (cartObject == null) {
                 return new java.util.ArrayList<>();
             }
-            return (java.util.List<java.util.Map<String, Object>>) cartObject;
+            return snapshot((java.util.List<java.util.Map<String, Object>>) cartObject);
         }
 
         @Override
         public void writeCart(java.util.List<java.util.Map<String, Object>> cart) {
-            session.setAttribute(CART_SESSION_KEY, cart);
+            session.setAttribute(CART_SESSION_KEY, snapshot(cart));
+        }
+
+        private java.util.List<java.util.Map<String, Object>> snapshot(
+                java.util.List<java.util.Map<String, Object>> cart) {
+            return cart.stream().map(item -> (java.util.Map<String, Object>)
+                    new java.util.HashMap<String, Object>(item))
+                    .collect(java.util.stream.Collectors.toCollection(java.util.ArrayList::new));
         }
 
         @Override

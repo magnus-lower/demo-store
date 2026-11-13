@@ -8,20 +8,23 @@ import lombok.Data;
 
 @Data
 public class RegisterRequestDto {
-    @NotBlank(message = "Email is required")
-    @Email(message = "Email must be valid")
+    @NotBlank(message = "E-postadresse er påkrevd")
+    @Email(message = "Oppgi en gyldig e-postadresse")
+    @jakarta.validation.constraints.Size(max = 254)
     private String email;
 
-    @NotBlank(message = "Password is required")
-    @Size(min = 8, message = "Password must be at least 8 characters")
-    @Pattern(regexp = ".*[A-Z].*", message = "Password must contain at least one uppercase letter")
-    @Pattern(regexp = ".*[a-z].*", message = "Password must contain at least one lowercase letter")
-    @Pattern(regexp = ".*\\d.*", message = "Password must contain at least one number")
+    @NotBlank(message = "Passord er påkrevd")
+    @Size(min = 8, message = "Passordet må inneholde minst 8 tegn")
+    @Pattern(regexp = ".*[A-Z].*", message = "Passordet må inneholde minst én stor bokstav")
+    @Pattern(regexp = ".*[a-z].*", message = "Passordet må inneholde minst én liten bokstav")
+    @Pattern(regexp = ".*\\d.*", message = "Passordet må inneholde minst ett tall")
     private String password;
 
-    @NotBlank(message = "First name is required")
+    @NotBlank(message = "Fornavn er påkrevd")
+    @Size(max = 100)
     private String firstName;
 
-    @NotBlank(message = "Last name is required")
+    @NotBlank(message = "Etternavn er påkrevd")
+    @Size(max = 100)
     private String lastName;
 }

@@ -19,8 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     window.toggleMobileMenu = function() {
-        const categoryList = document.getElementById('category-list');
-        categoryList.classList.toggle('active');
+        window.toggleCategories?.();
     };
 
 

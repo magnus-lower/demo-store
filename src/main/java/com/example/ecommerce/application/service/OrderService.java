@@ -1,6 +1,7 @@
 package com.example.ecommerce.application.service;
 
 import com.example.ecommerce.domain.exception.InsufficientStockException;
+import com.example.ecommerce.domain.exception.ProductNotFoundException;
 import com.example.ecommerce.domain.model.*;
 import com.example.ecommerce.domain.repository.OrderRepository;
 import com.example.ecommerce.domain.repository.ProductRepository;
@@ -14,6 +15,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,11 +26,28 @@ public class OrderService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Order createOrder(Long userId, Map<Long, Integer> productQuantities, Address shippingAddress) {
-        User user = userRepository.findById(userId)
+    public Order createOrder(Long userId, UUID requestId, Map<Long, Integer> productQuantities, Address shippingAddress) {
+        User user = userRepository.findForCheckoutById(userId)
             .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
+        var existing = orderRepository.findByUserIdAndCheckoutRequestId(userId, requestId);
+        if (existing.isPresent()) {
+            Order previous = existing.get();
+            Map<Long, Integer> previousItems = previous.getItems().stream().collect(
+                    Collectors.toMap(item -> item.getProduct().getId(), OrderItem::getQuantity));
+            Address address = previous.getShippingAddress();
+            if (!previousItems.equals(productQuantities)
+                    || !Objects.equals(address.getStreet(), shippingAddress.getStreet())
+                    || !Objects.equals(address.getCity(), shippingAddress.getCity())
+                    || !Objects.equals(address.getZipCode(), shippingAddress.getZipCode())
+                    || !Objects.equals(address.getCountry(), shippingAddress.getCountry())) {
+                throw new IllegalArgumentException("A checkout request ID cannot be reused for a different order");
+            }
+            return previous;
+        }
+
         Order order = new Order();
+        order.setCheckoutRequestId(requestId);
         order.setOrderNumber(generateOrderNumber());
         order.setUser(user);
         order.setOrderDate(LocalDateTime.now());
@@ -42,7 +62,7 @@ public class OrderService {
             Integer quantity = entry.getValue();
 
             Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new IllegalArgumentException("Product not found: " + productId));
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
             if (product.getStockQuantity() < quantity) {
                 throw new InsufficientStockException("Not enough stock for product: " + product.getName());
@@ -63,7 +83,7 @@ public class OrderService {
         }
 
         order.setTotalAmount(totalAmount.add(order.getShippingCost()));
-        return orderRepository.save(order);
+        return orderRepository.saveAndFlush(order);
     }
 
     public List<Order> getUserOrders(Long userId) {

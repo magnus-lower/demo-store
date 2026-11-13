@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Logg inn</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon-16.svg" sizes="16x16">
     <link rel="shortcut icon" href="/assets/favicon.svg">
@@ -12,17 +12,18 @@
 </head>
 <body>
     <div class="auth-container">
+        <p class="demo-notice">Demokontoer nullstilles ved omstart. Bruk et unikt testpassord og ingen sensitive opplysninger.</p>
         <h1>Logg inn</h1>
         <form id="login-form">
             <div class="form-group">
                 <label for="email">E-post</label>
                 <input type="email" id="email" name="email" required>
-                <span class="error-message" id="email-error"></span>
+                <span class="error-message" aria-live="polite" id="email-error"></span>
             </div>
             <div class="form-group">
                 <label for="password">Passord</label>
                 <input type="password" id="password" name="password" required>
-                <span class="error-message" id="password-error"></span>
+                <span class="error-message" aria-live="polite" id="password-error"></span>
             </div>
             <div class="form-group">
                 <button type="submit">Logg inn</button>
@@ -35,6 +36,7 @@
             </p>
         </form>
     </div>
+    <script src="/js/global/demo.js"></script>
     <script src="/js/pages/auth/login.js"></script>
 </body>
 </html>

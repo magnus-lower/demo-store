@@ -32,4 +32,15 @@ class ProductTest {
 
         assertTrue(product.isInStock());
     }
+    @Test
+    void jakartaValidationAcceptsDemoImagesAndRejectsInvalidPrices() {
+        try (var factory = jakarta.validation.Validation.buildDefaultValidatorFactory()) {
+            var validator = factory.getValidator();
+            Product product = new Product(null, "Demo", "Description", BigDecimal.TEN,
+                    "/images/drinking bottle.jpg", "Demo", 1);
+            assertTrue(validator.validate(product).isEmpty());
+            product.setPrice(BigDecimal.ZERO);
+            assertFalse(validator.validate(product).isEmpty());
+        }
+    }
 }

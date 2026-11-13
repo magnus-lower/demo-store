@@ -1,5 +1,6 @@
 package com.example.ecommerce.application.service;
 
+import com.example.ecommerce.domain.exception.InsufficientStockException;
 import com.example.ecommerce.application.session.CartStoragePort;
 import com.example.ecommerce.domain.model.Product;
 import lombok.RequiredArgsConstructor;
@@ -22,16 +23,17 @@ public class CartService {
     public List<Map<String, Object>> addToCart(Long productId, Integer quantity, CartStoragePort cartStorage) {
         List<Map<String, Object>> cart = getCart(cartStorage);
 
-        Product product = productService.getProducts().stream()
-                .filter(p -> p.getId().equals(productId))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Product not found with id: " + productId));
+        if (quantity == 0 || quantity < -1000 || quantity > 1000) {
+            throw new IllegalArgumentException("Invalid quantity");
+        }
+        Product product = productService.getProduct(productId);
 
         boolean found = false;
         for (Map<String, Object> item : cart) {
             Long itemId = Long.valueOf(item.get("id").toString());
             if (itemId.equals(productId)) {
-                int newQuantity = (Integer) item.get("quantity") + quantity;
+                int newQuantity = Math.addExact((Integer) item.get("quantity"), quantity);
+                validateQuantity(newQuantity, product);
                 if (newQuantity <= 0) {
                     return removeFromCart(productId, cartStorage);
                 }
@@ -42,10 +44,11 @@ public class CartService {
         }
 
         if (!found && quantity > 0) {
+            validateQuantity(quantity, product);
             Map<String, Object> item = new HashMap<>();
             item.put("id", product.getId());
             item.put("name", product.getName());
-            item.put("price", product.getPrice().doubleValue());
+            item.put("price", product.getPrice());
             item.put("imageUrl", product.getImageUrl());
             item.put("quantity", quantity);
             cart.add(item);
@@ -53,6 +56,15 @@ public class CartService {
 
         cartStorage.writeCart(cart);
         return cart;
+    }
+
+    private void validateQuantity(int quantity, Product product) {
+        if (quantity > 1000) {
+            throw new IllegalArgumentException("Quantity exceeds the demo limit");
+        }
+        if (quantity > product.getStockQuantity()) {
+            throw new InsufficientStockException("Not enough stock");
+        }
     }
 
     public List<Map<String, Object>> removeFromCart(Long productId, CartStoragePort cartStorage) {
@@ -79,6 +91,7 @@ public class CartService {
                 if (quantity <= 0) {
                     return removeFromCart(productId, cartStorage);
                 }
+                validateQuantity(quantity, productService.getProduct(productId));
                 item.put("quantity", quantity);
                 break;
             }

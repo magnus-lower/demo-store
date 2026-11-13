@@ -1,5 +1,7 @@
 package com.example.ecommerce.web.auth;
 
+import org.springframework.security.authentication.BadCredentialsException;
+import com.example.ecommerce.web.exception.ApiError;
 import com.example.ecommerce.web.auth.dto.AuthResponseDto;
 import com.example.ecommerce.web.auth.dto.LoginRequestDto;
 import com.example.ecommerce.web.auth.dto.PasswordResetRequestDto;
@@ -19,6 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.Map;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -32,6 +36,10 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequestDto request) {
+        if (request.getPassword().getBytes(StandardCharsets.UTF_8).length > 72) {
+            return ResponseEntity.badRequest().body(new ApiError(
+                    "Kontroller feltene du har fylt ut.", Map.of("password", "Passordet kan være maksimalt 72 UTF-8-byte.")));
+        }
         if (userService.findByEmail(request.getEmail()).isPresent()) {
             throw new UserAlreadyExistsException("Email already in use");
         }
@@ -45,11 +53,14 @@ public class AuthController {
 
         userService.save(user);
 
-        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message", "Kontoen er opprettet."));
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDto request) {
+        if (request.getPassword().getBytes(StandardCharsets.UTF_8).length > 72) {
+            throw new BadCredentialsException("Invalid credentials");
+        }
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
@@ -68,16 +79,7 @@ public class AuthController {
 
     @PostMapping("/password-reset-request")
     public ResponseEntity<?> requestPasswordReset(@Valid @RequestBody PasswordResetRequestDto request) {
-        // In a real app, you would:
-        // 1. Verify user exists
-        // 2. Generate a reset token and store it
-        // 3. Send an email with a reset link containing the token
-
-        if (userService.findByEmail(request.getEmail()).isPresent()) {
-            // For demo purposes, we'll just indicate success
-            return ResponseEntity.ok("Password reset link sent to your email");
-        } else {
-            return ResponseEntity.ok("If your email exists in our system, you will receive a reset link");
-        }
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+                Map.of("message", "Tilbakestilling av passord er ikke tilgjengelig i denne demoen. Ingen e-post er sendt."));
     }
 }

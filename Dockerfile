@@ -1,5 +1,5 @@
 # Use a base image that includes both Maven and OpenJDK
-FROM maven:3.8.4-openjdk-17-slim AS build
+FROM maven:3.9-eclipse-temurin-17 AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -14,7 +14,7 @@ RUN mvn dependency:go-offline -B
 COPY . .
 
 # Build the application
-RUN mvn package -DskipTests
+RUN mvn verify -B
 
 # Start a new image based on OpenJDK to run the application
 FROM eclipse-temurin:17-jdk-alpine

@@ -77,9 +77,6 @@ body {
 
 
 #product-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
     justify-content: center;
     margin-top: 20px;
     transition: opacity 0.3s ease;
@@ -1286,7 +1283,7 @@ button:hover {
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    gap: 30px;
     padding: 20px;
 }
 
@@ -1294,7 +1291,7 @@ button:hover {
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
-    width: 220px;
+    width: 100%;
     text-align: center;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
@@ -1947,5 +1944,38 @@ button:hover {
     .confirmation-container {
         margin: 10px auto;
         padding: 12px;
+    }
+}
+/* Keep semantic controls visually consistent with the existing design. */
+.category { color: inherit; font: inherit; margin: 0; }
+.category:hover { background-color: transparent; }
+.close { background: transparent; padding: 0; margin: 0; line-height: 1; }
+.close:hover { background: transparent; }
+:focus-visible { outline: 2px solid #0051ba; outline-offset: 3px; }
+.search-input:focus-visible { outline: 2px solid #0051ba; }
+.demo-notice { color: #555; font-size: 0.9rem; line-height: 1.5; }
+.confirmation-number { font-size: 18px; color: #666; margin-top: 10px; }
+button:disabled { opacity: 0.65; cursor: wait; }
+.modal { overflow-y: auto; }
+@media (max-width: 480px) {
+    .modal-actions { flex-wrap: wrap; }
+}
+
+
+.demo-banner {
+    margin: 16px 0;
+    padding: 14px 18px;
+    color: #234360;
+    background-color: #eef5fc;
+    border: 1px solid #d2e2f1;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+    .demo-banner {
+        margin: 12px 0;
+        padding: 12px 14px;
     }
 }

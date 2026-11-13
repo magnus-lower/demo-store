@@ -1,336 +1,142 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
     let cart = [];
+    let checkoutPending = false;
+    let mutationPending = false;
+    const checkoutButton = document.getElementById('checkout-button');
+    const message = document.getElementById('cart-message');
+    const loginDialog = Demo.dialog(document.getElementById('login-modal'),
+        document.getElementById('modal-backdrop'));
 
-
-    function loadCart() {
-        fetch('/api/cart')
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error('Failed to load cart');
-                }
-                return res.json();
-            })
-            .then(data => {
-                console.log("Cart data loaded:", data);
-                cart = data || [];
-                updateCartUI();
-            })
-            .catch(err => {
-                console.error("Error loading cart:", err);
-                updateCartUI();
-            });
+    function showError(error) {
+        message.textContent = error.message;
     }
 
+    async function loadCart() {
+        try {
+            cart = await Demo.request('/api/cart');
+            message.textContent = '';
+            updateCartUI();
+        } catch (error) {
+            checkoutButton.disabled = true;
+            showError(error);
+        }
+    }
 
     function updateCartUI() {
-        const cartItems = document.getElementById("cart-items");
-        const emptyCartMessage = document.getElementById("empty-cart-message");
-        const backToStoreButton = document.getElementById("back-to-store");
-        const clearCartButton = document.getElementById("clear-cart");
-        const cartTotalElement = document.getElementById("cart-total");
-        const orderSummary = document.getElementById("order-summary");
-        const checkoutButton = document.getElementById("checkout-button");
-
-        cartItems.innerHTML = '';
-
-        if (cart.length === 0) {
-            emptyCartMessage.style.display = 'block';
-            cartItems.style.display = 'none';
-            backToStoreButton.style.display = 'none';
-            clearCartButton.style.display = 'none';
-            cartTotalElement.style.display = 'none';
-            orderSummary.style.display = 'none';
-            checkoutButton.style.display = 'none';
-            return;
+        const list = document.getElementById('cart-items');
+        list.replaceChildren();
+        const empty = cart.length === 0;
+        document.getElementById('empty-cart-message').style.display = empty ? 'block' : 'none';
+        for (const id of ['cart-items', 'back-to-store', 'clear-cart', 'cart-total', 'order-summary', 'checkout-button']) {
+            document.getElementById(id).style.display = empty ? 'none' : 'block';
         }
-
-        emptyCartMessage.style.display = 'none';
-        cartItems.style.display = 'block';
-        backToStoreButton.style.display = 'block';
-        clearCartButton.style.display = 'block';
-        cartTotalElement.style.display = 'block';
-        orderSummary.style.display = 'block';
-        checkoutButton.style.display = 'block';
-
-        let itemsCount = 0;
-        let itemsTotal = 0;
-
-        cart.forEach((item, index) => {
-            itemsCount += item.quantity;
-
-            let price = typeof item.price === "object" && item.price !== null
-                ? (item.price.value || item.price)
-                : item.price;
-            itemsTotal += price * item.quantity;
-
-            const cartItem = document.createElement("li");
-            cartItem.dataset.id = item.id;
-            cartItem.innerHTML = `
-                <img src="${item.imageUrl}" alt="${item.name}" style="width:50px; height:auto;">
-                ${item.name} - kr ${price}
-                <button class="decrease" data-index="${index}">-</button>
-                <span class="quantity">${item.quantity}</span>
-                <button class="increase" data-index="${index}">+</button>
-                <button class="remove-item" data-index="${index}">×</button>
-            `;
-            cartItems.appendChild(cartItem);
-        });
-
-
-        document.getElementById("items-count").textContent = itemsCount;
-        document.getElementById("items-total").textContent = `kr ${itemsTotal.toFixed(2)}`;
-        document.getElementById("final-total").textContent = `kr ${(itemsTotal + 49).toFixed(2)}`;
-        updateCartTotal();
-    }
-
-
-    function updateCartTotal() {
-        const cartTotalElement = document.getElementById("cart-total");
-        const total = cart.reduce((sum, item) => {
-            let price = typeof item.price === "object" && item.price !== null
-                ? (item.price.value || item.price)
-                : item.price;
-            return sum + price * item.quantity;
-        }, 0);
-        cartTotalElement.textContent = `Totalt: kr ${total.toFixed(2)}`;
-    }
-
-
-    document.getElementById("cart-items").addEventListener("click", (event) => {
-        const target = event.target;
-        const index = target.dataset.index;
-        if (index === undefined) return;
-        const item = cart[index];
-
-        if (target.classList.contains("increase")) {
-            fetch(`/api/cart/add?productId=${item.id}&quantity=1`, { method: 'POST' })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(() => loadCart())
-                .catch(error => {
-                    console.error('Error increasing quantity:', error);
-                });
-        }
-        if (target.classList.contains("decrease")) {
-            if (item.quantity > 1) {
-                fetch(`/api/cart/add?productId=${item.id}&quantity=-1`, { method: 'POST' })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(() => loadCart())
-                    .catch(error => {
-                        console.error('Error decreasing quantity:', error);
-                    });
-            } else {
-                fetch(`/api/cart/remove?productId=${item.id}`, { method: 'POST' })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(() => loadCart())
-                    .catch(error => {
-                        console.error('Error removing item:', error);
-                    });
-            }
-        }
-        if (target.classList.contains("remove-item")) {
-            fetch(`/api/cart/remove?productId=${item.id}`, { method: 'POST' })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(() => loadCart())
-                .catch(error => {
-                    console.error('Error removing item:', error);
-                });
-        }
-    });
-
-
-    document.getElementById("back-to-store").addEventListener("click", () => {
-        window.location.href = "/index.html";
-    });
-    document.getElementById("back-to-store-empty").addEventListener("click", () => {
-        window.location.href = "/index.html";
-    });
-
-
-    document.getElementById("clear-cart").addEventListener("click", () => {
-        fetch('/api/cart/clear', { method: 'POST' })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+        let total = 0, count = 0;
+        for (const item of cart) {
+            const row = Demo.element('li');
+            row.dataset.id = item.id;
+            const image = Demo.image(item.imageUrl, item.name);
+            image.style.width = '50px';
+            image.style.height = 'auto';
+            row.append(image, document.createTextNode(item.name + ' - kr ' + Number(item.price).toFixed(2)));
+            for (const [className, label, name] of [
+                ['decrease', '-', 'Reduser antall'], ['quantity', item.quantity, ''],
+                ['increase', '+', 'Øk antall'], ['remove-item', '×', 'Fjern vare']
+            ]) {
+                const control = Demo.element(className === 'quantity' ? 'span' : 'button', className, label);
+                if (name) {
+                    control.type = 'button';
+                    control.setAttribute('aria-label', name + ': ' + item.name);
+                    control.addEventListener('click', () => changeCart(item, className));
                 }
-                return response.json();
-            })
-            .then(() => loadCart())
-            .catch(error => {
-                console.error('Error clearing cart:', error);
-            });
+                row.append(control);
+            }
+            list.append(row);
+            count += item.quantity;
+            total += Number(item.price) * item.quantity;
+        }
+        document.getElementById('items-count').textContent = count;
+        document.getElementById('items-total').textContent = 'kr ' + total.toFixed(2);
+        document.getElementById('final-total').textContent = 'kr ' + (total + 49).toFixed(2);
+        document.getElementById('cart-total').textContent = 'Totalt: kr ' + total.toFixed(2);
+        checkoutButton.disabled = checkoutPending || mutationPending;
+    }
+
+    async function changeCart(item, action) {
+        if (checkoutPending || mutationPending) return;
+        let url = '/api/cart/clear';
+        if (item) {
+            url = action === 'remove-item' || (action === 'decrease' && item.quantity === 1)
+                ? '/api/cart/remove?productId=' + item.id
+                : '/api/cart/add?productId=' + item.id + '&quantity=' + (action === 'increase' ? 1 : -1);
+        }
+        mutationPending = true;
+        checkoutButton.disabled = true;
+        try {
+            cart = await Demo.request(url, {method: 'POST'});
+            message.textContent = '';
+        } catch (error) {
+            showError(error);
+        } finally {
+            mutationPending = false;
+            updateCartUI();
+        }
+    }
+
+    document.getElementById('clear-cart').addEventListener('click', () => changeCart());
+    for (const id of ['back-to-store', 'back-to-store-empty']) {
+        document.getElementById(id).addEventListener('click', () => { window.location.href = '/index.html'; });
+    }
+    document.getElementById('go-to-login').addEventListener('click', () => {
+        window.location.href = '/html/auth/login.html';
     });
 
-
-    document.getElementById("checkout-button").addEventListener("click", () => {
-
+    checkoutButton.addEventListener('click', async () => {
+        if (checkoutPending || mutationPending || cart.length === 0) return;
         const token = localStorage.getItem('token');
         if (!token) {
-            showLoginModal();
+            loginDialog.open();
             return;
         }
-
-
-        if (cart.length === 0) {
-            alert('Handlekurven er tom');
-            return;
-        }
-
-
-        const items = {};
-        cart.forEach(item => {
-            items[item.id] = item.quantity;
-        });
-
-        const checkoutData = {
-            street: "Testgate 1",
-            city: "Oslo",
-            zipCode: "0001",
-            country: "Norge",
-            items: items
-        };
-
-        console.log('Sending checkout data:', checkoutData);
-        console.log('Using token:', token ? 'Token exists' : 'No token');
-
-
-        fetch('/api/checkout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(checkoutData)
-        })
-            .then(response => {
-                console.log('Response status:', response.status);
-                console.log('Response headers:', response.headers);
-
-                if (response.ok) {
-                    return response.json();
-                } else {
-
-                    return response.text().then(errorText => {
-                        console.error('Error response:', errorText);
-                        console.error('Response status:', response.status);
-
-                        if (response.status === 401) {
-                            throw new Error('Du må være logget inn for å bestille');
-                        } else if (response.status === 403) {
-                            throw new Error('Du har ikke tilgang til å bestille');
-                        } else if (response.status === 500) {
-                            throw new Error(`Server-feil: ${errorText}`);
-                        } else {
-                            throw new Error(`Feil ${response.status}: ${errorText || 'Ukjent feil'}`);
-                        }
-                    });
-                }
-            })
-            .then(orderResponse => {
-                console.log('Order created successfully:', orderResponse);
-
-
-                localStorage.setItem("purchasedItems", JSON.stringify(cart));
-
-
-                localStorage.setItem("orderDetails", JSON.stringify(orderResponse));
-
-
-                return fetch('/api/cart/clear', { method: 'POST' });
-            })
-            .then(() => {
-
-                window.location.href = "/html/order/checkout-confirmation.html";
-            })
-            .catch(error => {
-                console.error('Checkout error:', error);
-
-                if (error.message.includes('User not found') || error.message.includes('magnus.lower@gmail.com')) {
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('user');
-                    showLoginModal();
-                } else if (error.message.includes('logget inn') || error.message.includes('tilgang')) {
-                    showLoginModal();
-                } else {
-                    alert(error.message || 'Det oppstod en feil under bestillingen. Prøv igjen.');
-                }
+        checkoutPending = true;
+        checkoutButton.disabled = true;
+        message.textContent = 'Demobestillingen behandles…';
+        let order;
+        try {
+            const items = Object.fromEntries(cart.map(item => [item.id, item.quantity]));
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const signature = JSON.stringify({user: user.email, items});
+            // Keep the ID after a lost response so a retry returns the same order.
+            const saved = JSON.parse(sessionStorage.getItem('pendingCheckout') || 'null');
+            const pending = saved?.signature === signature ? saved : {signature, requestId: crypto.randomUUID()};
+            sessionStorage.setItem('pendingCheckout', JSON.stringify(pending));
+            order = await Demo.request('/api/checkout', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token},
+                body: JSON.stringify({
+                    requestId: pending.requestId,
+                    street: 'Testgate 1', city: 'Oslo', zipCode: '0001', country: 'Norge', items
+                })
             });
+        } catch (error) {
+            showError(error);
+            if (error.status === 401) loginDialog.open();
+            checkoutPending = false;
+            checkoutButton.disabled = false;
+            return;
+        }
+
+        // A confirmed order stays successful even if browser storage is unavailable.
+        message.textContent = 'Demobestilling ' + order.orderNumber + ' er registrert. Ingen betaling eller levering skjer.';
+        try {
+            sessionStorage.removeItem('pendingCheckout');
+            localStorage.setItem('purchasedItems', JSON.stringify(cart));
+            localStorage.setItem('orderDetails', JSON.stringify(order));
+            window.location.href = '/html/order/checkout-confirmation.html';
+        } catch {
+            cart = [];
+            updateCartUI();
+        }
     });
-
-
-    function showLoginModal() {
-        const modal = document.getElementById('login-modal');
-        const backdrop = document.getElementById('modal-backdrop');
-
-        modal.style.display = 'block';
-        backdrop.style.display = 'block';
-
-
-        document.getElementById('go-to-login').onclick = () => {
-            hideLoginModal();
-            window.location.href = '/html/auth/login.html';
-        };
-
-        document.getElementById('stay-in-cart').onclick = () => {
-            hideLoginModal();
-        };
-
-
-        backdrop.onclick = () => {
-            hideLoginModal();
-        };
-
-
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                hideLoginModal();
-            }
-        });
-    }
-
-    function hideLoginModal() {
-        const modal = document.getElementById('login-modal');
-        const backdrop = document.getElementById('modal-backdrop');
-
-        modal.style.display = 'none';
-        backdrop.style.display = 'none';
-    }
-
-
-    function createConfirmationJS() {
-        fetch('/js/pages/order/confirmation.js')
-            .then(response => {
-                if (!response.ok && response.status === 404) {
-                    console.log("Creating confirmation.js file");
-
-                }
-            })
-            .catch(() => {
-                console.log("confirmation.js not found, but will be created separately");
-            });
-    }
-
-    createConfirmationJS();
-
 
     loadCart();
 });

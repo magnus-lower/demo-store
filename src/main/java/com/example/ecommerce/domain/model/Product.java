@@ -2,7 +2,7 @@ package com.example.ecommerce.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @ToString
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
-@AllArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +31,7 @@ public class Product {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @Pattern(regexp = "^(http|https)://.*$", message = "Image URL must be a valid URL")
+    @Pattern(regexp = "^(https?://[^/]+/|/images/)[^<>\"]*$", message = "Image URL must be an HTTP(S) URL or a local image path")
     @Column(name = "image_url")
     private String imageUrl;
 
@@ -40,8 +39,25 @@ public class Product {
     @Column(nullable = false)
     private String category;
 
-    @Column(name = "stock_quantity")
+    @NotNull
+    @Min(0)
+    @Column(name = "stock_quantity", nullable = false)
     private Integer stockQuantity = 0;
+
+    @Version
+    @Setter(AccessLevel.NONE)
+    private Long version;
+
+    public Product(Long id, String name, String description, BigDecimal price,
+                   String imageUrl, String category, Integer stockQuantity) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imageUrl = imageUrl;
+        this.category = category;
+        this.stockQuantity = stockQuantity;
+    }
 
     public void applyDiscount(double percentage) {
         if (percentage > 0 && percentage <= 100) {
